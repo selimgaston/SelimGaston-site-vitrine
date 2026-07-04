@@ -56,3 +56,14 @@ Sur cette machine, si le Node global est encore en v14 :
 ```bash
 npm run deploy:node22
 ```
+
+## Pipeline GitHub Actions
+
+Le workflow `.github/workflows/deploy-cloudflare-pages.yml` deploie automatiquement sur Cloudflare Pages a chaque push sur `main`.
+
+Ajoute ces secrets dans GitHub, dans `Settings` > `Secrets and variables` > `Actions` :
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Le token Cloudflare doit avoir les droits Cloudflare Pages pour le compte qui contient le projet `selimgaston-site-vitrine`.
