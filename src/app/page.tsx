@@ -70,7 +70,7 @@ export default function Home() {
         <a href={`mailto:${profile.email}`}>Contact</a>
       </div>
 
-      <section className="hero heroLogoOnly">
+      <section className="hero heroWithPhoto" style={{ backgroundImage: `url(${profile.heroBackgroundImage})` }}>
         <div className="heroLogo" style={{ backgroundImage: `url(${profile.logoImage})` }} aria-hidden="true" />
         <nav className="nav" aria-label="Navigation principale">
           <a className="homeMark" href="#top" aria-label="Back to top">

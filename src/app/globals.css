@@ -76,8 +76,8 @@ h3 {
   background-size: cover;
 }
 
-.heroLogoOnly {
-  background-image: none;
+.heroWithPhoto {
+  background-position: center;
 }
 
 .hero::before {
@@ -86,8 +86,8 @@ h3 {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.08), transparent 36%),
-    linear-gradient(180deg, rgba(3, 3, 3, 0.86), rgba(3, 3, 3, 1));
+    linear-gradient(90deg, rgba(3, 3, 3, 0.16), rgba(3, 3, 3, 0.48), rgba(3, 3, 3, 0.86)),
+    linear-gradient(180deg, rgba(3, 3, 3, 0.18), rgba(3, 3, 3, 0.82));
 }
 
 .hero::after {
@@ -111,7 +111,7 @@ h3 {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.26;
+  opacity: 0.12;
   filter:
     brightness(0)
     invert(1)
@@ -306,8 +306,8 @@ h3 {
 }
 
 .heroContent {
-  width: min(1320px, calc(100% - 40px));
-  margin: auto auto 7vh;
+  width: min(760px, calc(100% - 40px));
+  margin: auto max(20px, calc((100vw - 1320px) / 2)) 7vh auto;
   padding-top: 112px;
 }
 
@@ -722,6 +722,7 @@ iframe {
 
   .heroContent {
     width: calc(100% - 28px);
+    margin: auto auto 7vh;
   }
 
   h1 {

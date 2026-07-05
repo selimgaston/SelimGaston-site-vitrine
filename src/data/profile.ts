@@ -10,6 +10,7 @@ export const profile = {
   youtubeUrl: "https://www.youtube.com/@selimgaston",
   beatportUrl: "https://www.beatport.com/fr/artist/selim-gaston/150444",
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
+  heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
   heroImage: "/selim-gaston-hero.jpeg",
   logoImage: "/selim-gaston-logo-cropped.png",
   latestTitle: "Current Selection",
