@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 
@@ -12,7 +12,7 @@ const inter = Inter({
   variable: "--font-sans"
 });
 
-const instrumentSerif = Instrument_Serif({
+const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${instrumentSerif.variable}`}>
+    <html lang="fr" className={`${inter.variable} ${bebasNeue.variable}`}>
       <body>{children}</body>
     </html>
   );

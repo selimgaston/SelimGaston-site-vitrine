@@ -12,7 +12,6 @@ export const profile = {
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
   heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
   heroImage: "/selim-gaston-hero.jpeg",
-  logoImage: "/selim-gaston-logo-cropped.png",
   latestTitle: "Current Selection",
   latestDescription:
     "A deep electronic journey shaped by progressive tension, organic groove and melodic emotion.",
