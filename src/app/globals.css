@@ -382,8 +382,8 @@ h2 {
 
 .statement {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
-  gap: 8vw;
+  grid-template-columns: minmax(180px, 0.42fr) minmax(420px, 1.58fr);
+  gap: 5vw;
   padding: 120px max(20px, calc((100vw - 1320px) / 2));
   background: var(--paper);
   color: var(--ink);
@@ -395,8 +395,9 @@ h2 {
 
 .copyBlock p {
   color: #4d4944;
-  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
-  line-height: 1.7;
+  font-size: clamp(1.35rem, 2.35vw, 2.15rem);
+  line-height: 1.42;
+  max-width: 980px;
 }
 
 .serviceGrid {

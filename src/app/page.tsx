@@ -121,7 +121,6 @@ export default function Home() {
       <section className="statement" id="bio">
         <div>
           <p className="eyebrow">Bio</p>
-          <h2>A deep and emotional approach to electronic music.</h2>
         </div>
         <div className="copyBlock">
           {profile.bio.split("\n\n").map((paragraph) => (
