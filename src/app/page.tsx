@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 import { profile } from "@/data/profile";
+import { MenuNav } from "./MenuNav";
+import { TopLink } from "./TopLink";
 
 function getSpotifyEmbedUrl(url: string) {
   const cleanUrl = url.split("?")[0].replace("/intl-fr/", "/");
@@ -95,45 +97,18 @@ export default function Home() {
 
   return (
     <main>
-      <div className="topBar">
-        <p>Official booking channel: {profile.email}</p>
-        <a href={`mailto:${profile.email}`}>Contact</a>
-      </div>
+      <span id="top" aria-hidden="true" />
+
+      <nav className="nav" aria-label="Navigation principale">
+        <TopLink />
+        <MenuNav />
+      </nav>
 
       <section className="hero heroWithPhoto">
         <div className="heroPhoto" aria-hidden="true" />
-        <nav className="nav" aria-label="Navigation principale">
-          <a className="homeMark" href="#top" aria-label="Back to top">
-            <span />
-            <span />
-          </a>
-          <details className="menuShell">
-            <summary className="menuButton">
-              <span className="menuIcon">
-                <span />
-                <span />
-              </span>
-              Menu
-            </summary>
-            <div className="menuPanel">
-              <div className="menuPanelInner">
-                <p>Navigation</p>
-                <a href="#bio">Bio</a>
-                <a href="#music">Music</a>
-                <a href="#gigs">Gigs</a>
-                <a href="#contact">Booking</a>
-                <a href={profile.spotifyUrl} target="_blank" rel="noreferrer">
-                  Spotify
-                </a>
-                <a href={profile.soundcloudUrl} target="_blank" rel="noreferrer">
-                  SoundCloud
-                </a>
-              </div>
-            </div>
-          </details>
-        </nav>
+        <img className="heroLogo" src="/logo-sg.svg" alt="" aria-hidden="true" />
 
-        <div className="heroContent" id="top">
+        <div className="heroContent">
           <p className="location">{profile.location} / Electronic music</p>
           <h1>{profile.artistName}</h1>
           <p className="tagline">{profile.tagline}</p>
@@ -189,9 +164,18 @@ export default function Home() {
       <section className="latest" id="music">
         <div className="latestVisual" style={{ backgroundImage: `url(${profile.heroImage})` }} />
         <div className="latestCopy">
-          <p className="eyebrow">Latest Sound</p>
+          <p className="eyebrow">Latest Release</p>
           <h2>{profile.latestTitle}</h2>
           <p>{profile.latestDescription}</p>
+          <iframe
+            className="latestPlayer"
+            title={`${profile.latestTitle} — Spotify player`}
+            src={getSpotifyEmbedUrl(profile.latestSpotifyUrl)}
+            width="100%"
+            height="152"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          />
           <div className="releaseActions">
             <a href={profile.spotifyUrl} target="_blank" rel="noreferrer">
               Listen on Spotify
@@ -210,17 +194,27 @@ export default function Home() {
           <h2>Upcoming dates.</h2>
           <div className="gigList">
             {profile.gigs.map((gig) => (
-              <article className="gigItem" key={`${gig.date}-${gig.venue}`}>
-                <span>{gig.date}</span>
+              <article
+                className={gig.past ? "gigItem isPast" : "gigItem"}
+                key={`${gig.date}-${gig.venue}`}
+              >
+                <span>
+                  {gig.date}
+                  {gig.past ? <b className="gigTag">Played</b> : null}
+                </span>
                 <strong>{gig.venue}</strong>
-                <em>{gig.city}</em>
+                <em>
+                  {gig.city}
+                  <b className="gigCountry">{gig.country}</b>
+                </em>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="musicPlayers" aria-label="Music players">
+      <section className="musicPlayers" id="players" aria-label="Music players">
+        <h2 className="playersTitle">Listen to my music</h2>
         <div className="players">
           <article className="player">
             <div className="playerHeader">
@@ -258,7 +252,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="socialCta" aria-label="Follow Selim Gaston">
+      <section className="socialCta" id="follow" aria-label="Follow Selim Gaston">
         <div className="socialCover">
           <h2>Follow Me</h2>
         </div>

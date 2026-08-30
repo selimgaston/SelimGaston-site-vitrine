@@ -15,14 +15,19 @@ export const profile = {
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
   heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
   heroImage: "/selim-gaston-hero.jpeg",
-  latestTitle: "Current Selection",
+  latestTitle: "Ain't Movin",
   latestDescription:
-    "A deep electronic journey shaped by progressive tension, organic groove and melodic emotion.",
+    "The latest single, out now on Groove Society — deep, groove-driven electronic music.",
+  latestSpotifyUrl: "https://open.spotify.com/album/1RUbdm6AgdSsAM2CnAT3h4",
   gigsImage: "/selim-gaston-gigs.jpeg",
   gigs: [
-    { date: "18 July", venue: "Cozy Bar", city: "Hammamet" },
-    { date: "8 August", venue: "Sindbad", city: "Hammamet" },
-    { date: "10 August", venue: "Cassette × Follamour", city: "Gammarth" }
+    { date: "12 September", venue: "TBA", city: "Paris", country: "France", past: false },
+    { date: "11 September", venue: "TBA", city: "Paris", country: "France", past: false },
+    { date: "10 August", venue: "Cassette × Follamour", city: "Gammarth", country: "Tunisie", past: true },
+    { date: "9 August", venue: "Sindbad", city: "Hammamet", country: "Tunisie", past: true },
+    { date: "8 August", venue: "MOLO", city: "Gammarth", country: "Tunisie", past: true },
+    { date: "29 July", venue: "La Bêtise × MOLO", city: "Gammarth", country: "Tunisie", past: true },
+    { date: "18 July", venue: "Cozy Bar", city: "Hammamet", country: "Tunisie", past: true }
   ],
   stats: [
     { value: "Deep", label: "emotional approach" },
