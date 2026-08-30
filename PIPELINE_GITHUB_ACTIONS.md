@@ -25,13 +25,15 @@ uses: actions/checkout@v4
 
 La pipeline télécharge le code du projet sur cette machine.
 
-### 3. Installation de Node.js 22
+### 3. Installation de Node.js
 
 ```yaml
 uses: actions/setup-node@v4
+with:
+  node-version-file: .node-version
 ```
 
-Elle prépare Node.js 22 et active le cache npm pour accélérer les prochaines exécutions.
+Elle prépare la version de Node.js indiquée dans le fichier `.node-version` (Node 26) et active le cache npm pour accélérer les prochaines exécutions.
 
 ### 4. Installation des dépendances
 
@@ -89,7 +91,7 @@ Si plusieurs modifications sont poussées rapidement, GitHub annule l'ancien dé
 ```text
 Push sur main
 → récupération du code
-→ installation de Node.js
+→ installation de Node.js (version du fichier .node-version)
 → installation des dépendances
 → création du site statique dans out/
 → publication sur Cloudflare Pages

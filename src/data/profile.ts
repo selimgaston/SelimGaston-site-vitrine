@@ -5,6 +5,9 @@ export const profile = {
   email: "selimgaston@gmail.com",
   bio:
     "Selim Gaston is a DJ and producer exploring electronic music through a deep and emotional approach. Rooted in Progressive House, he developed a style built on smooth transitions, subtle emotions, and storytelling.\n\nOver time, his sound evolved toward more organic and rhythmic influences. Today, he blends Afro House, Melodic House, and Indie Dance, creating immersive sets driven by groove, melody, and feeling.",
+  // Vidéo de la section Bio : fichier local dans /public (.mp4/.webm) ou lien YouTube/Vimeo. Laisser vide ("") pour masquer.
+  bioVideoUrl: "/selim-gaston-bio.mp4",
+  bioVideoPoster: "/selim-gaston-bio-poster.jpg",
   spotifyUrl: "https://open.spotify.com/intl-fr/artist/5xp3yUJp63Y1qxniSCRCXc?si=2-qTa04jQb6mWZxr6cebCA",
   soundcloudUrl: "https://soundcloud.com/selim-gaston",
   youtubeUrl: "https://www.youtube.com/@selimgaston",

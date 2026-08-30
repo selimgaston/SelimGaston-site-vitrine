@@ -15,7 +15,7 @@ Tout le contenu principal est dans `src/data/profile.ts` :
 
 ## Lancer en local
 
-Utilise Node 22, ou au minimum Node 20.9.
+Utilise la version de Node indiquee dans `.node-version` (Node 26), ou au minimum Node 22.
 
 ```bash
 npm install
@@ -37,24 +37,18 @@ Parametres recommandes :
 - Framework preset: `Next.js (Static HTML Export)` ou `None`
 - Build command: `npm run build`
 - Build output directory: `out`
-- Node version: `22`
+- Node version: `26`
 
 Si Cloudflare ne detecte pas `.node-version`, ajoute la variable d'environnement :
 
 ```text
-NODE_VERSION=22
+NODE_VERSION=26
 ```
 
 Depuis le terminal, apres connexion Cloudflare :
 
 ```bash
 npm run deploy
-```
-
-Sur cette machine, si le Node global est encore en v14 :
-
-```bash
-npm run deploy:node22
 ```
 
 ## Pipeline GitHub Actions

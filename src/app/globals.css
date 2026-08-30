@@ -77,7 +77,19 @@ h3 {
 }
 
 .heroWithPhoto {
-  background-position: center;
+  background-color: #6d280f;
+}
+
+.heroPhoto {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image: url("/selim-gaston-hero-background.jpeg");
+  background-repeat: no-repeat;
+  background-size: auto 120%;
+  background-position: right -6% center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 12%, rgba(0, 0, 0, 0.35) 42%, #000 78%);
+  mask-image: linear-gradient(90deg, transparent 12%, rgba(0, 0, 0, 0.35) 42%, #000 78%);
 }
 
 .hero::before {
@@ -86,8 +98,9 @@ h3 {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.08), transparent 36%),
-    linear-gradient(180deg, rgba(3, 3, 3, 0.86), rgba(3, 3, 3, 1));
+    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.06), transparent 36%),
+    linear-gradient(90deg, rgba(3, 3, 3, 0.95) 18%, rgba(3, 3, 3, 0.55) 55%, rgba(3, 3, 3, 0.35) 100%),
+    linear-gradient(180deg, rgba(3, 3, 3, 0.35), rgba(3, 3, 3, 0.9));
 }
 
 .hero::after {
@@ -373,13 +386,60 @@ h2 {
 
 .statement .eyebrow {
   color: var(--ink);
+  font-size: 1.5rem;
+  letter-spacing: 0.22em;
+}
+
+.bioVideo {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 32px;
+  aspect-ratio: 9 / 16;
+  max-height: 62vh;
+  overflow: hidden;
+  border: 1px solid var(--line-dark);
+  background: #0c0c0c;
+}
+
+.bioVideo iframe,
+.bioVideo video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bioVideo video:fullscreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.bioVideo video::backdrop {
+  background: #000;
+}
+
+.bioVideo span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #8a847b;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .copyBlock p {
   color: #4d4944;
-  font-size: clamp(1.35rem, 2.35vw, 2.15rem);
-  line-height: 1.42;
-  max-width: 980px;
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  line-height: 1.5;
+  max-width: 900px;
 }
 
 .serviceGrid {
@@ -546,6 +606,7 @@ iframe {
 .socialCta ul {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -624,6 +685,30 @@ iframe {
 .footer p {
   max-width: 280px;
   line-height: 1.55;
+}
+
+@media (min-width: 921px) {
+  .statement,
+  .latest,
+  .gigsSection,
+  .musicPlayers,
+  .socialCta {
+    min-height: max(100vh, 720px);
+  }
+
+  .statement {
+    align-content: center;
+  }
+
+  .musicPlayers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .musicPlayers .players {
+    width: 100%;
+  }
 }
 
 @media (max-width: 920px) {
@@ -705,6 +790,13 @@ iframe {
   .heroContent {
     width: calc(100% - 28px);
     margin: auto auto 7vh;
+  }
+
+  .heroPhoto {
+    background-size: cover;
+    background-position: 62% top;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 92%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 92%);
   }
 
   h1 {
