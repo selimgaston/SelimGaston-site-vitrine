@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { profile } from "@/data/profile";
 
 function getSpotifyEmbedUrl(url: string) {
@@ -55,9 +56,10 @@ function PlatformLogo({ name }: { name: string }) {
   }
 
   if (name === "beatport") {
+    // Official Beatport primary icon (support.beatport.com — TBG-PrimaryIcon-Black.svg)
     return (
-      <svg aria-hidden="true" viewBox="0 0 88 88">
-        <path d="M44 0C19.7 0 0 19.7 0 44s19.7 44 44 44 44-19.7 44-44S68.3 0 44 0Zm-4.2 64.5H24.4v-41h15.3c8.4 0 13.6 4.4 13.6 11 0 3.8-1.8 6.8-5.1 8.5 4.2 1.5 6.4 4.9 6.4 9.5 0 7.2-5.6 12-14.8 12Zm-4-25.3c4 0 6.3-1.8 6.3-5s-2.3-4.9-6.3-4.9h-1.1v9.9h1.1Zm1.1 18.8c4.4 0 6.8-2.1 6.8-5.9 0-3.6-2.5-5.7-6.9-5.7h-2.1V58h2.2Zm27.8 6.5h-9.9v-41h9.9v41Z" />
+      <svg aria-hidden="true" viewBox="205 220 610 770">
+        <path d="M817.7,763.3c0,120-95.8,217-217,217c-120,0-215.8-94.6-215.8-217c0-57.6,21.8-108.5,56.4-146.7L294.6,763.3l-77-77l165.5-163.7c22.4-22.4,33.9-51.5,33.9-83.6V233.6h108.5V439c0,63-22.4,116.4-66.1,160l-4.9,4.8c38.2-35.2,90.3-56.4,146.1-56.4C723.8,547.5,817.7,645.1,817.7,763.3z M719.5,763.3c0-64.3-53.3-116.4-118.8-116.4c-66.1,0-117.6,54.6-117.6,116.4c0,63.6,52.1,117.6,117.6,117.6C668.6,880.9,719.5,825.8,719.5,763.3z" />
       </svg>
     );
   }
@@ -70,17 +72,25 @@ function PlatformLogo({ name }: { name: string }) {
     );
   }
 
+  if (name === "booking") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 64 48">
+        <path d="M6 0h52a6 6 0 0 1 6 6v36a6 6 0 0 1-6 6H6a6 6 0 0 1-6-6V6a6 6 0 0 1 6-6Zm2.9 6 21.3 18.4a2.8 2.8 0 0 0 3.6 0L58 6H8.9ZM58 13.8 37.6 31.4a8.8 8.8 0 0 1-11.2 0L6 13.8V42h52V13.8Z" />
+      </svg>
+    );
+  }
+
   return <span aria-hidden="true">b</span>;
 }
 
 export default function Home() {
   const platforms = [
-    { name: "spotify", url: profile.spotifyUrl },
-    { name: "soundcloud", url: profile.soundcloudUrl },
-    { name: "youtube", url: profile.youtubeUrl },
-    { name: "beatport", url: profile.beatportUrl },
-    { name: "facebook", url: profile.facebookUrl },
-    { name: "booking", url: `mailto:${profile.email}` }
+    { name: "spotify", url: profile.spotifyUrl, bg: "#1DB954", fg: "#ffffff" },
+    { name: "soundcloud", url: profile.soundcloudUrl, bg: "#FF5500", fg: "#ffffff" },
+    { name: "youtube", url: profile.youtubeUrl, bg: "#FF0000", fg: "#ffffff" },
+    { name: "beatport", url: profile.beatportUrl, bg: "#000000", fg: "#01FF95" },
+    { name: "facebook", url: profile.facebookUrl, bg: "#1877F2", fg: "#ffffff" },
+    { name: "booking", url: `mailto:${profile.email}`, bg: "#E7FF3B", fg: "#050505" }
   ];
 
   return (
@@ -254,7 +264,10 @@ export default function Home() {
         </div>
         <ul>
           {platforms.map((platform) => (
-            <li key={platform.name}>
+            <li
+              key={platform.name}
+              style={{ "--brand-bg": platform.bg, "--brand-fg": platform.fg } as CSSProperties}
+            >
               <a href={platform.url} target={platform.url.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer">
                 <span className="platformIcon">
                   <PlatformLogo name={platform.name} />
