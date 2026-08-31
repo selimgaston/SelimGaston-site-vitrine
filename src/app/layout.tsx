@@ -21,6 +21,12 @@ const bebasNeue = Bebas_Neue({
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
+  // Pas d'indexation tant que le domaine définitif n'est pas en place.
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false }
+  },
   title: `${profile.artistName} | DJ`,
   description: `${profile.artistName} - ${profile.tagline}`,
   openGraph: {
