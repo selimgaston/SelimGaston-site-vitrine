@@ -90,9 +90,7 @@ export default function Home() {
         <img className="heroLogo" src="/logo-sg.svg" alt="" aria-hidden="true" />
 
         <div className="heroContent">
-          <p className="location">{profile.location} / Electronic music</p>
           <h1>{profile.artistName}</h1>
-          <p className="tagline">{profile.tagline}</p>
           <div className="actions">
             <a className="primaryButton" href={`mailto:${profile.email}`}>
               Booking
