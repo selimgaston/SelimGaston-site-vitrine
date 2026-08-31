@@ -18,7 +18,6 @@ const SELECTORS = [
 export function ScrollReveal() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (!("IntersectionObserver" in window)) return;
 
     const els = Array.from(document.querySelectorAll<HTMLElement>(SELECTORS));
     if (els.length === 0) return;
@@ -26,20 +25,39 @@ export function ScrollReveal() {
     document.documentElement.classList.add("reveal-on");
     els.forEach((el) => el.classList.add("reveal"));
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            io.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
+    let pending = els.slice();
+    let frame = 0;
 
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    const reveal = () => {
+      frame = 0;
+      const trigger = window.innerHeight * 0.9;
+      pending = pending.filter((el) => {
+        if (el.getBoundingClientRect().top < trigger) {
+          el.classList.add("is-visible");
+          return false;
+        }
+        return true;
+      });
+      if (pending.length === 0) {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+      }
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(reveal);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    reveal();
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return null;
