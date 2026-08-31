@@ -469,6 +469,7 @@ h2 {
   min-height: 520px;
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
   filter: grayscale(0.2) contrast(1.08);
 }
 
@@ -513,6 +514,7 @@ h2 {
   min-height: 560px;
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
   filter: grayscale(0.1) contrast(1.05);
 }
 
@@ -815,9 +817,17 @@ iframe {
     width: clamp(150px, 44vw, 300px);
   }
 
+  .latest,
+  .gigsSection {
+    min-height: 0;
+  }
+
   .latestVisual,
   .gigsImage {
-    min-height: 300px;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    background-repeat: no-repeat;
+    background-position: center 22%;
   }
 
   .musicPlayers {
@@ -904,11 +914,6 @@ iframe {
 
   .actions a {
     flex: 1 1 100%;
-  }
-
-  .latestVisual,
-  .gigsImage {
-    min-height: 230px;
   }
 
   .gigItem strong {
