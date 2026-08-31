@@ -357,7 +357,13 @@ h2 {
 .releaseActions {
   max-width: 560px;
   flex-direction: column;
+  flex-wrap: nowrap;
   align-items: stretch;
+}
+
+.releaseActions a {
+  width: 100%;
+  flex: 0 0 auto;
 }
 
 .primaryButton,
@@ -884,8 +890,7 @@ iframe {
     font-size: clamp(3.45rem, 18vw, 5.8rem);
   }
 
-  .actions a,
-  .releaseActions a {
+  .actions a {
     flex: 1 1 100%;
   }
 
