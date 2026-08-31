@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { profile } from "@/data/profile";
 import { MenuNav } from "./MenuNav";
 import { TopLink } from "./TopLink";
+import { ScrollReveal } from "./ScrollReveal";
 
 function getSpotifyEmbedUrl(url: string) {
   const cleanUrl = url.split("?")[0].replace("/intl-fr/", "/");
@@ -10,26 +11,6 @@ function getSpotifyEmbedUrl(url: string) {
 
 function getSoundCloudEmbedUrl(url: string) {
   return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23e7ff3b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
-}
-
-function getVideoEmbedUrl(url: string) {
-  try {
-    const u = new URL(url);
-    if (u.hostname.includes("youtu.be")) {
-      return `https://www.youtube.com/embed/${u.pathname.slice(1)}`;
-    }
-    if (u.hostname.includes("youtube.com")) {
-      if (u.pathname.startsWith("/embed/")) return url;
-      const id = u.searchParams.get("v");
-      if (id) return `https://www.youtube.com/embed/${id}`;
-    }
-    if (u.hostname.includes("vimeo.com")) {
-      return `https://player.vimeo.com/video/${u.pathname.split("/").filter(Boolean).pop()}`;
-    }
-  } catch {
-    return url;
-  }
-  return url;
 }
 
 function PlatformLogo({ name }: { name: string }) {
@@ -126,27 +107,8 @@ export default function Home() {
       <section className="statement" id="bio">
         <div>
           <p className="eyebrow">Bio</p>
-          <div className="bioVideo">
-            {!profile.bioVideoUrl ? (
-              <span>Emplacement vidéo</span>
-            ) : /\.(mp4|webm|mov|ogg)$/i.test(profile.bioVideoUrl) ? (
-              <video
-                controls
-                playsInline
-                preload="metadata"
-                poster={profile.bioVideoPoster || undefined}
-              >
-                <source src={profile.bioVideoUrl} />
-              </video>
-            ) : (
-              <iframe
-                title="Selim Gaston video"
-                src={getVideoEmbedUrl(profile.bioVideoUrl)}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-              />
-            )}
+          <div className="bioLogo">
+            <img src="/logo-sg-black.svg" alt={`${profile.artistName} logo`} />
           </div>
         </div>
         <div className="copyBlock">
@@ -177,8 +139,8 @@ export default function Home() {
             loading="lazy"
           />
           <div className="releaseActions">
-            <a href={profile.spotifyUrl} target="_blank" rel="noreferrer">
-              Listen on Spotify
+            <a href={profile.latestBeatportUrl} target="_blank" rel="noreferrer">
+              Buy on Beatport
             </a>
             <a href={profile.soundcloudUrl} target="_blank" rel="noreferrer">
               Listen on SoundCloud
@@ -303,6 +265,8 @@ export default function Home() {
           <p>Bookings for clubs, brands and private events.</p>
         </section>
       </footer>
+
+      <ScrollReveal />
     </main>
   );
 }
