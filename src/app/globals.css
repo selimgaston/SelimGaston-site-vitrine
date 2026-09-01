@@ -808,6 +808,10 @@ iframe {
     background-position: center 22%;
   }
 
+  .latestVisual {
+    background-position: center 42%;
+  }
+
   .musicPlayers {
     padding-top: 64px;
     padding-bottom: 64px;

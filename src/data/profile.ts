@@ -12,6 +12,7 @@ export const profile = {
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
   heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
   heroImage: "/selim-gaston-hero.jpeg",
+  latestImage: "/selim-gaston-latest.jpeg",
   latestTitle: "Ain't Movin",
   latestDescription:
     "The latest single, out now on Groove Society — deep, groove-driven electronic music.",

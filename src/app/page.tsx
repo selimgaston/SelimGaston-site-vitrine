@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       <section className="latest" id="music">
-        <div className="latestVisual" style={{ backgroundImage: `url(${profile.heroImage})` }} />
+        <div className="latestVisual" style={{ backgroundImage: `url(${profile.latestImage})` }} />
         <div className="latestCopy">
           <p className="eyebrow">Latest Release</p>
           <h2>{profile.latestTitle}</h2>
