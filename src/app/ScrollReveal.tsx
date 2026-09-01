@@ -11,8 +11,7 @@ const SELECTORS = [
   ".playersTitle",
   ".players",
   ".socialCover",
-  ".socialCta ul",
-  ".footer section"
+  ".socialCta ul"
 ].join(", ");
 
 export function ScrollReveal() {

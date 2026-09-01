@@ -113,11 +113,6 @@ export default function Home() {
           {profile.bio.split("\n\n").map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-          <div className="serviceGrid" aria-label="Sound directions">
-            {profile.services.map((service) => (
-              <span key={service}>{service}</span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -233,35 +228,9 @@ export default function Home() {
         </ul>
       </section>
 
-      <footer className="footer" id="footer">
-        <section>
-          <h3>Music</h3>
-          <a href={profile.spotifyUrl} target="_blank" rel="noreferrer">
-            Spotify
-          </a>
-          <a href={profile.soundcloudUrl} target="_blank" rel="noreferrer">
-            SoundCloud
-          </a>
-        </section>
-        <section>
-          <h3>Gigs</h3>
-          {profile.gigs.map((gig) => (
-            <span key={`${gig.date}-${gig.venue}`}>
-              {gig.date} — {gig.venue}
-            </span>
-          ))}
-        </section>
-        <section>
-          <h3>Sound</h3>
-          {profile.services.map((service) => (
-            <span key={service}>{service}</span>
-          ))}
-        </section>
-        <section id="contact">
-          <h3>Contact</h3>
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <p>Bookings for clubs, brands and private events.</p>
-        </section>
+      <footer className="footer" id="contact">
+        <span className="footerLabel">Contact</span>
+        <a href={`mailto:${profile.email}`}>{profile.email}</a>
       </footer>
 
       <ScrollReveal />
