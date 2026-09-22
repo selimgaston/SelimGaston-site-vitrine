@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
 import { profile } from "@/data/profile";
 import { MenuNav } from "./MenuNav";
 import { TopLink } from "./TopLink";
@@ -76,9 +76,14 @@ export default function Home() {
     { name: "booking", url: `mailto:${profile.email}`, bg: "#E7FF3B", fg: "#050505" }
   ];
 
+  const bioParagraphs = profile.bio.split("\n\n").map((paragraph) => paragraph.split(" "));
+  const bioWordCount = bioParagraphs.flat().length;
+  const bioOffsets = bioParagraphs.map((_, p) => bioParagraphs.slice(0, p).flat().length);
+
   return (
     <main>
       <span id="top" aria-hidden="true" />
+      <div className="scrollProgress" aria-hidden="true" />
 
       <nav className="nav" aria-label="Navigation principale">
         <TopLink />
@@ -90,7 +95,27 @@ export default function Home() {
         <img className="heroLogo" src="/logo-sg.svg" alt="" aria-hidden="true" />
 
         <div className="heroContent">
-          <h1>{profile.artistName}</h1>
+          <h1>
+            <span className="visuallyHidden">{profile.artistName}</span>
+            <span className="heroTitle" aria-hidden="true">
+              {profile.artistName.split(" ").map((word, w, words) => (
+                <Fragment key={word}>
+                  <span className="heroWord">
+                    {word.split("").map((char, c) => (
+                      <span
+                        className="heroChar"
+                        key={c}
+                        style={{ "--i": words.slice(0, w).join("").length + c } as CSSProperties}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                  {w < words.length - 1 ? " " : null}
+                </Fragment>
+              ))}
+            </span>
+          </h1>
           <div className="actions">
             <a className="primaryButton" href={`mailto:${profile.email}`}>
               Booking
@@ -102,6 +127,19 @@ export default function Home() {
         </div>
       </section>
 
+      <a className="marquee" href="#gigs" aria-label="Voir les dates">
+        {[0, 1].map((copy) => (
+          <div className="marqueeTrack" key={copy} aria-hidden="true">
+            {profile.gigs.map((gig) => (
+              <span className="marqueeItem" key={`${gig.date}-${gig.venue}`}>
+                {gig.date}
+                <em>{gig.venue === "TBA" ? gig.city : `${gig.venue} · ${gig.city}`}</em>
+              </span>
+            ))}
+          </div>
+        ))}
+      </a>
+
       <section className="statement" id="bio">
         <div>
           <p className="eyebrow">Bio</p>
@@ -110,14 +148,39 @@ export default function Home() {
           </div>
         </div>
         <div className="copyBlock">
-          {profile.bio.split("\n\n").map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {bioParagraphs.map((words, p) => (
+            <p key={p}>
+              {words.map((word, w) => (
+                <span
+                  className="bioWord"
+                  key={w}
+                  style={{ "--p": (bioOffsets[p] + w) / bioWordCount } as CSSProperties}
+                >
+                  {word}{" "}
+                </span>
+              ))}
+            </p>
           ))}
         </div>
       </section>
 
       <section className="latest" id="music">
-        <div className="latestVisual" style={{ backgroundImage: `url(${profile.latestImage})` }} />
+        <div className="latestVisual" style={{ backgroundImage: `url(${profile.latestImage})` }}>
+          <svg className="spinBadge" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <path id="badgeCircle" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+            </defs>
+            <circle cx="100" cy="100" r="99" />
+            <g className="spinBadgeText">
+              <text>
+                <textPath href="#badgeCircle" textLength="462" lengthAdjust="spacing">
+                  {`Out now • ${profile.latestTitle} • ${profile.latestLabel} •`}
+                </textPath>
+              </text>
+            </g>
+            <path className="spinBadgePlay" d="M90 82 L118 100 L90 118 Z" />
+          </svg>
+        </div>
         <div className="latestCopy">
           <p className="eyebrow">Latest Release</p>
           <h2>{profile.latestTitle}</h2>
@@ -154,6 +217,7 @@ export default function Home() {
                 key={`${gig.date}-${gig.venue}`}
               >
                 <span>
+                  {gig.past ? null : <i className="liveDot" aria-hidden="true" />}
                   {gig.date}
                   {gig.past ? <b className="gigTag">Played</b> : null}
                 </span>
@@ -169,7 +233,16 @@ export default function Home() {
       </section>
 
       <section className="musicPlayers" id="players" aria-label="Music players">
-        <h2 className="playersTitle">Listen to my music</h2>
+        <h2 className="playersTitle">
+          Listen to my music
+          <span className="equalizer" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+        </h2>
         <div className="players">
           <article className="player">
             <div className="playerHeader">

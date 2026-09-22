@@ -14,6 +14,7 @@ export const profile = {
   heroImage: "/selim-gaston-hero.jpeg",
   latestImage: "/selim-gaston-latest.jpeg",
   latestTitle: "Ain't Movin",
+  latestLabel: "Groove Society",
   latestDescription:
     "The latest single, out now on Groove Society — deep, groove-driven electronic music.",
   latestSpotifyUrl: "https://open.spotify.com/album/1RUbdm6AgdSsAM2CnAT3h4",

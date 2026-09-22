@@ -4,9 +4,7 @@ import { useEffect } from "react";
 
 const SELECTORS = [
   ".statement > div",
-  ".latestVisual",
   ".latestCopy",
-  ".gigsImage",
   ".gigsContent",
   ".playersTitle",
   ".players",

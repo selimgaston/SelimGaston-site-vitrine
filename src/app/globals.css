@@ -8,6 +8,8 @@
   --line-dark: rgba(0, 0, 0, 0.14);
   --accent: #e7ff3b;
   --orange: #ff5a1f;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --parallax: 18vh;
 }
 
 * {
@@ -52,6 +54,521 @@ iframe {
   .reveal-on .players,
   .reveal-on .socialCta ul {
     transition-delay: 110ms;
+  }
+
+  /* Intro du hero : photo qui se dévoile, titre lettre par lettre, puis CTA. */
+  .heroPhoto {
+    animation: hero-photo-in 1400ms var(--ease-out-expo) both;
+  }
+
+  .heroLogo {
+    animation: hero-logo-in 1600ms var(--ease-out-expo) 200ms both;
+  }
+
+  .heroChar {
+    animation: hero-char-in 900ms var(--ease-out-expo) calc(150ms + var(--i) * 40ms) both;
+  }
+
+  .heroContent .actions {
+    animation: hero-fade-up 800ms var(--ease-out-expo) 750ms both;
+  }
+
+  .marqueeTrack {
+    animation: marquee 38s linear infinite;
+  }
+
+  .marquee:hover .marqueeTrack,
+  .marquee:focus-visible .marqueeTrack {
+    animation-play-state: paused;
+  }
+
+  /* Parallax de sortie du hero, piloté par le scroll (sans JS). */
+  @supports (animation-timeline: view()) {
+    .heroContent {
+      animation: hero-content-out linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 70%;
+    }
+
+    .hero {
+      view-timeline-name: --hero;
+    }
+
+    .heroPhoto,
+    .heroLogo {
+      animation-name: hero-photo-in, hero-parallax;
+      animation-duration: 1400ms, auto;
+      animation-timing-function: var(--ease-out-expo), linear;
+      animation-fill-mode: both, both;
+      animation-timeline: auto, --hero;
+      animation-range: normal, exit 0% exit 100%;
+    }
+
+    .heroLogo {
+      animation-name: hero-logo-in, hero-parallax-logo;
+      animation-duration: 1600ms, auto;
+      animation-delay: 200ms, 0ms;
+    }
+  }
+}
+
+@keyframes hero-photo-in {
+  from {
+    clip-path: inset(0 0 0 38%);
+    scale: 1.12;
+  }
+  to {
+    clip-path: inset(0);
+    scale: 1;
+  }
+}
+
+@keyframes hero-logo-in {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
+@keyframes hero-char-in {
+  from {
+    translate: 0 105%;
+    rotate: 8deg;
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
+@keyframes hero-content-out {
+  to {
+    opacity: 0;
+    translate: 0 calc(var(--parallax) * -0.6);
+  }
+}
+
+@keyframes hero-parallax {
+  to {
+    translate: 0 var(--parallax);
+  }
+}
+
+@keyframes hero-parallax-logo {
+  to {
+    translate: 0 calc(var(--parallax) * 1.6);
+    rotate: 90deg;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Chaque mot masque ses lettres ; le padding compense le line-height serré de Bebas. */
+.heroWord {
+  display: inline-block;
+  overflow: clip;
+  padding: 0.1em 0.02em 0.04em;
+  margin: -0.1em -0.02em -0.04em;
+  vertical-align: top;
+}
+
+.heroChar {
+  display: inline-block;
+  transform-origin: left bottom;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  border-block: 1px solid var(--black);
+  background: var(--accent);
+  color: var(--black);
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(1.9rem, 3.6vw, 3.4rem);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marqueeTrack {
+  flex: none;
+  display: flex;
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  padding: 0.32em 0 0.26em;
+}
+
+.marqueeItem em {
+  font-style: normal;
+  opacity: 0.55;
+}
+
+.marqueeItem::after {
+  content: "";
+  width: 0.28em;
+  height: 0.28em;
+  margin: 0 0.75em;
+  align-self: center;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.marquee:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -4px;
+}
+
+/* Grain de texture sur toute la page, statique. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scrollProgress {
+  display: none;
+}
+
+.spinBadge {
+  position: absolute;
+  right: clamp(16px, 3vw, 40px);
+  bottom: clamp(16px, 3vw, 40px);
+  z-index: 2;
+  width: clamp(104px, 11vw, 150px);
+  height: auto;
+  overflow: visible;
+}
+
+.spinBadge circle {
+  fill: var(--accent);
+}
+
+.spinBadge text {
+  fill: var(--black);
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: 21px;
+  text-transform: uppercase;
+}
+
+.spinBadgeText {
+  transform-origin: 100px 100px;
+}
+
+.spinBadgePlay {
+  fill: var(--black);
+}
+
+.liveDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.gigItem span:has(.liveDot) {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.equalizer {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.06em;
+  height: 0.62em;
+  margin-left: 0.28em;
+  vertical-align: 0.08em;
+}
+
+.equalizer i {
+  width: 0.09em;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: bottom;
+}
+
+.equalizer i:nth-child(1) { transform: scaleY(0.45); }
+.equalizer i:nth-child(2) { transform: scaleY(0.85); }
+.equalizer i:nth-child(3) { transform: scaleY(0.6); }
+.equalizer i:nth-child(4) { transform: scaleY(1); }
+.equalizer i:nth-child(5) { transform: scaleY(0.35); }
+
+.footer a,
+.playerHeader a {
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0 1px;
+  transition: background-size 380ms var(--ease-out-expo), color 140ms ease;
+}
+
+.footer a:hover,
+.playerHeader a:hover,
+.footer a:focus-visible,
+.playerHeader a:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinBadgeText {
+    animation: spin 18s linear infinite;
+  }
+
+  .liveDot {
+    animation: live-pulse 1.6s ease-out infinite;
+  }
+
+  .equalizer i {
+    animation: eq-bounce 900ms ease-in-out infinite alternate;
+  }
+
+  .equalizer i:nth-child(2) { animation-duration: 620ms; animation-delay: -200ms; }
+  .equalizer i:nth-child(3) { animation-duration: 780ms; animation-delay: -450ms; }
+  .equalizer i:nth-child(4) { animation-duration: 540ms; animation-delay: -120ms; }
+  .equalizer i:nth-child(5) { animation-duration: 700ms; animation-delay: -330ms; }
+
+  /* Tout ce qui suit est piloté par le scroll ; sans support, la page reste statique et lisible. */
+  @supports (animation-timeline: view()) {
+    .scrollProgress {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 40;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      transform-origin: left;
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+
+    /* Bio : le logo tourne en place, le texte s'allume mot par mot. */
+    .bioLogo img {
+      animation: bio-logo-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+
+    .copyBlock {
+      view-timeline-name: --bio;
+    }
+
+    .bioWord {
+      animation: word-light linear both;
+      animation-timeline: --bio;
+      animation-range:
+        cover calc(6% + var(--p) * 30%)
+        cover calc(10% + var(--p) * 30%);
+    }
+
+    /* Photos Latest / Gigs : rideau couleur de section qui se retire. */
+    .latestVisual::after,
+    .gigsImage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      animation: curtain-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 75%;
+    }
+
+    .latestVisual::after {
+      background: var(--black);
+      transform-origin: bottom;
+    }
+
+    .gigsImage::after {
+      background: var(--paper);
+      transform-origin: left;
+      animation-name: curtain-left;
+    }
+
+    .spinBadge {
+      animation: badge-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    /* Titres de section : montent depuis un masque. */
+    .latestCopy h2,
+    .gigsContent h2,
+    .playersTitle,
+    .socialCover h2 {
+      animation: title-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+
+    /* Gigs : chaque ligne glisse à son entrée. */
+    .gigItem {
+      animation: row-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    /* Players : les deux lecteurs se relèvent légèrement. */
+    .player {
+      animation: player-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    /* Follow : icônes en pop. */
+    .platformIcon {
+      animation: icon-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .player {
+    transition: border-color 200ms ease, translate 300ms var(--ease-out-expo);
+  }
+
+  .player:hover {
+    border-color: var(--accent);
+    translate: 0 -6px;
+  }
+
+  .gigItem:not(.isPast) strong {
+    transition: translate 300ms var(--ease-out-expo), color 160ms ease;
+  }
+
+  .gigItem:not(.isPast):hover strong {
+    translate: 12px 0;
+    color: var(--orange);
+  }
+
+  .socialCta a:hover .platformIcon {
+    rotate: -8deg;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 90, 31, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(255, 90, 31, 0);
+  }
+}
+
+@keyframes eq-bounce {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes bio-logo-in {
+  from {
+    opacity: 0;
+    rotate: -90deg;
+    scale: 0.6;
+  }
+}
+
+@keyframes word-light {
+  from {
+    opacity: 0.18;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes curtain-up {
+  to {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes curtain-left {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes badge-in {
+  from {
+    scale: 0;
+    rotate: -120deg;
+  }
+}
+
+@keyframes title-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+    translate: 0 0.35em;
+  }
+  to {
+    clip-path: inset(-0.2em -0.2em -0.2em -0.2em);
+    translate: 0 0;
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    translate: -40px 0;
+  }
+}
+
+@keyframes player-in {
+  from {
+    opacity: 0;
+    translate: 0 48px;
+    scale: 0.97;
+  }
+}
+
+@keyframes icon-pop {
+  from {
+    opacity: 0;
+    scale: 0.4;
+    rotate: -90deg;
   }
 }
 
@@ -399,9 +916,41 @@ h2 {
   color: var(--white);
 }
 
+.primaryButton,
+.secondaryButton,
+.releaseActions a {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.primaryButton::before,
+.secondaryButton::before,
+.releaseActions a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 420ms var(--ease-out-expo);
+}
+
+.primaryButton:hover::before,
+.secondaryButton:hover::before,
+.releaseActions a:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 .primaryButton:hover,
 .secondaryButton:hover,
-.releaseActions a:hover,
+.releaseActions a:hover {
+  border-color: var(--orange);
+  color: var(--black);
+}
+
 .menuButton:hover,
 .homeMark:hover {
   background: var(--orange);
@@ -451,6 +1000,7 @@ h2 {
 }
 
 .latestVisual {
+  position: relative;
   min-height: 520px;
   background-position: center;
   background-size: cover;
@@ -496,6 +1046,7 @@ h2 {
 }
 
 .gigsImage {
+  position: relative;
   min-height: 560px;
   background-position: center;
   background-size: cover;
@@ -871,6 +1422,25 @@ iframe {
 }
 
 @media (max-width: 560px) {
+  :root {
+    --parallax: 8vh;
+  }
+
+  .spinBadge {
+    width: 92px;
+  }
+
+  @keyframes row-in {
+    from {
+      opacity: 0;
+      translate: -20px 0;
+    }
+  }
+
+  .marquee {
+    font-size: 1.6rem;
+  }
+
   .heroContent {
     width: calc(100% - 28px);
     margin: auto auto 7vh;
