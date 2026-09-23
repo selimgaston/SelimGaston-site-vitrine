@@ -100,8 +100,8 @@ export function MenuNav() {
           <a href="#players" onClick={(event) => goToSection(event, "#players")}>
             Spotify × Soundcloud
           </a>
-          <a href="#follow" onClick={(event) => goToSection(event, "#follow")}>
-            Follow Me
+          <a href="#links" onClick={(event) => goToSection(event, "#links")}>
+            Links
           </a>
         </div>
       </div>

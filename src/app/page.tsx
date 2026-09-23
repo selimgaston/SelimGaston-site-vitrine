@@ -280,9 +280,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="socialCta" id="follow" aria-label="Follow Selim Gaston">
+      <section className="socialCta" id="links" aria-label="Selim Gaston links">
         <div className="socialCover">
-          <h2>Follow Me</h2>
+          <h2>
+            Links
+            <span className="linksArrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 18 18 6M8 6h10v10" />
+              </svg>
+            </span>
+          </h2>
         </div>
         <ul>
           {platforms.map((platform) => (
@@ -295,6 +302,9 @@ export default function Home() {
                   <PlatformLogo name={platform.name} />
                 </span>
                 <span>{platform.name}</span>
+                <svg className="linkArrow" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 18 18 6M8 6h10v10" />
+                </svg>
               </a>
             </li>
           ))}
