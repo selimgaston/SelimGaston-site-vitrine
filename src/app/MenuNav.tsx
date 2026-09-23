@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent as ReactMouseEvent } from "react";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function MenuNav() {
@@ -30,6 +30,22 @@ export function MenuNav() {
   }, [cancelClose]);
 
   useEffect(() => cancelClose, [cancelClose]);
+
+  // Ouverture au survol réservée à la souris : sur mobile, un tap émet aussi un « enter »
+  // juste avant le clic, ce qui ouvrait puis refermait aussitôt le menu.
+  const onPointerEnter = useCallback(
+    (event: ReactPointerEvent) => {
+      if (event.pointerType === "mouse") openNow();
+    },
+    [openNow]
+  );
+
+  const onPointerLeave = useCallback(
+    (event: ReactPointerEvent) => {
+      if (event.pointerType === "mouse") scheduleClose();
+    },
+    [scheduleClose]
+  );
 
   const goToSection = useCallback(
     (event: ReactMouseEvent<HTMLAnchorElement>, hash: string) => {
@@ -64,8 +80,8 @@ export function MenuNav() {
     >
       <summary
         className="menuButton"
-        onMouseEnter={openNow}
-        onMouseLeave={scheduleClose}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
         onClick={(event) => {
           event.preventDefault();
           setOpen((value) => !value);
@@ -81,8 +97,8 @@ export function MenuNav() {
       <div className="menuPanel" onClick={closeNow}>
         <div
           className="menuPanelInner"
-          onMouseEnter={openNow}
-          onMouseLeave={scheduleClose}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
         >
           <p>Navigation</p>
           <a href="#top" onClick={(event) => goToSection(event, "#top")}>

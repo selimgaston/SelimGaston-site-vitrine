@@ -19,6 +19,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 img,
@@ -319,7 +321,11 @@ body::after {
 
 .footer a,
 .playerHeader a {
-  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0 1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  min-width: 44px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left 0 bottom 14px / 0 1px;
   transition: background-size 380ms var(--ease-out-expo), color 140ms ease;
 }
 
@@ -978,16 +984,38 @@ h2 {
   transition: transform 420ms var(--ease-out-expo);
 }
 
-.primaryButton:hover::before,
-.secondaryButton:hover::before,
-.releaseActions a:hover::before {
+@media (hover: hover) {
+  .primaryButton:hover::before,
+  .secondaryButton:hover::before,
+  .releaseActions a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .primaryButton:hover,
+  .secondaryButton:hover,
+  .releaseActions a:hover {
+    border-color: var(--orange);
+    color: var(--black);
+  }
+}
+
+.primaryButton:focus-visible::before,
+.secondaryButton:focus-visible::before,
+.releaseActions a:focus-visible::before,
+.primaryButton:active::before,
+.secondaryButton:active::before,
+.releaseActions a:active::before {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.primaryButton:hover,
-.secondaryButton:hover,
-.releaseActions a:hover {
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.releaseActions a:focus-visible,
+.primaryButton:active,
+.secondaryButton:active,
+.releaseActions a:active {
   border-color: var(--orange);
   color: var(--black);
 }
@@ -1139,13 +1167,13 @@ h2 {
 .gigTag {
   padding: 3px 8px;
   border: 1px solid var(--line-dark);
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   color: #8a847b;
 }
 
 .gigCountry {
-  font-size: 0.62rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #928b81;
@@ -1320,12 +1348,21 @@ iframe {
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.socialCta a:hover .platformIcon,
-.socialCta a:focus-visible .platformIcon {
+.socialCta a:focus-visible .platformIcon,
+.socialCta a:active .platformIcon {
   background: var(--brand-bg, var(--ink));
   border-color: var(--brand-bg, var(--ink));
   color: var(--brand-fg, var(--paper));
   transform: scale(1.06);
+}
+
+@media (hover: hover) {
+  .socialCta a:hover .platformIcon {
+    background: var(--brand-bg, var(--ink));
+    border-color: var(--brand-bg, var(--ink));
+    color: var(--brand-fg, var(--paper));
+    transform: scale(1.06);
+  }
 }
 
 .platformIcon svg {
@@ -1345,7 +1382,7 @@ iframe {
   align-items: baseline;
   justify-content: flex-end;
   gap: 6px 14px;
-  padding: 18px clamp(20px, 5vw, 56px);
+  padding: 6px clamp(20px, 5vw, 56px);
   border-top: 1px solid var(--line);
   background: var(--black);
   text-align: right;
@@ -1353,7 +1390,7 @@ iframe {
 
 .footerLabel {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1500,17 +1537,27 @@ iframe {
     padding: 24px 0;
   }
 
+  /* Grille de liens : 3 colonnes, séparateurs tracés par le gap. */
   .socialCta ul {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line-dark);
   }
 
   .socialCta li {
-    border-left: 0;
-    border-top: 1px solid var(--line-dark);
+    border: 0;
+    background: var(--paper);
   }
 
   .socialCta a {
     min-height: 190px;
+    padding: 32px 16px;
+  }
+
+  /* Photos plafonnées pour qu'elles tiennent à l'écran en paysage. */
+  .latestVisual,
+  .gigsImage {
+    max-height: 72svh;
   }
 }
 
@@ -1521,6 +1568,51 @@ iframe {
 
   .spinBadge {
     width: 92px;
+  }
+
+  .marqueeItem {
+    padding: 0.36em 0 0.3em;
+  }
+
+  .socialCta ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .socialCta a {
+    min-height: 150px;
+    gap: 14px;
+    padding: 24px 12px;
+    font-size: 0.85rem;
+  }
+
+  .platformIcon {
+    width: 62px;
+    height: 62px;
+    border-width: 3px;
+  }
+
+  .platformIcon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .linkArrow {
+    top: 12px;
+    right: 12px;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Gigs plus compacts : ville et pays sur une même ligne. */
+  .gigItem {
+    gap: 6px;
+    padding: 20px 0;
+  }
+
+  .gigItem em {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
   }
 
   @keyframes row-in {
@@ -1619,5 +1711,38 @@ iframe {
 
   h1 {
     font-size: clamp(2.8rem, 16vw, 5rem);
+  }
+}
+
+/* Téléphone en paysage : menu compact sur 2 colonnes pour tenir sans scroll. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .menuPanel {
+    align-items: flex-start;
+    padding-top: 76px;
+    padding-bottom: 12px;
+  }
+
+  .menuPanelInner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(620px, calc(100vw - 28px));
+  }
+
+  .menuPanelInner p {
+    grid-column: 1 / -1;
+    padding: 10px 18px;
+  }
+
+  .menuPanelInner a {
+    font-size: 1.45rem;
+    padding: 10px 18px;
+  }
+
+  .menuPanelInner a:nth-of-type(odd) {
+    border-right: 1px solid var(--line-dark);
+  }
+
+  .menuPanelInner a:nth-last-of-type(-n + 2) {
+    border-bottom: 0;
   }
 }
