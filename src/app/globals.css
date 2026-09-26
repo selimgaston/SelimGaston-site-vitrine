@@ -1409,39 +1409,76 @@ iframe {
   color: var(--white);
 }
 
-/* Bulle WhatsApp : élément flottant isolé, ne touche à aucune autre mise en page. */
+/* Bulle WhatsApp : élément flottant isolé, ne touche à aucune autre mise en page.
+   Anneau de texte tournant (même principe que .spinBadge) autour d'un cœur vert cliquable. */
 .whatsappFab {
   position: fixed;
-  right: clamp(16px, 3vw, 32px);
-  bottom: max(clamp(16px, 3vw, 32px), calc(env(safe-area-inset-bottom) + 12px));
+  right: clamp(12px, 2.4vw, 26px);
+  bottom: max(clamp(12px, 2.4vw, 26px), calc(env(safe-area-inset-bottom) + 12px));
   z-index: 25;
-  width: 58px;
-  height: 58px;
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  transition: transform 280ms var(--ease-out-expo);
+}
+
+.whatsappRing {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.28));
+}
+
+.whatsappRing circle {
+  fill: var(--paper);
+}
+
+.whatsappRing text {
+  fill: var(--ink);
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.whatsappRingText {
+  transform-origin: 50px 50px;
+}
+
+.whatsappCore {
+  position: relative;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: #25d366;
-  color: #ffffff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
-  transition: transform 280ms var(--ease-out-expo), box-shadow 280ms var(--ease-out-expo);
 }
 
-.whatsappFab svg {
-  width: 30px;
-  height: 30px;
+.whatsappCore svg {
+  width: 25px;
+  height: 25px;
   fill: currentColor;
 }
 
 @media (hover: hover) {
   .whatsappFab:hover {
     transform: scale(1.08);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34);
+  }
+
+  .whatsappFab:hover .whatsappRing {
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.34));
   }
 }
 
 .whatsappFab:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
+  border-radius: 50%;
 }
 
 .whatsappFab:active {
@@ -1451,6 +1488,10 @@ iframe {
 @media (prefers-reduced-motion: no-preference) {
   .whatsappFab {
     animation: whatsapp-in 640ms var(--ease-out-expo) 1200ms both;
+  }
+
+  .whatsappRingText {
+    animation: spin 14s linear infinite;
   }
 
   @keyframes whatsapp-in {
@@ -1638,14 +1679,23 @@ iframe {
   }
 
   .whatsappFab {
-    width: 50px;
-    height: 50px;
-    right: 14px;
+    width: 78px;
+    height: 78px;
+    right: 12px;
   }
 
-  .whatsappFab svg {
-    width: 26px;
-    height: 26px;
+  .whatsappRing text {
+    font-size: 9px;
+  }
+
+  .whatsappCore {
+    width: 40px;
+    height: 40px;
+  }
+
+  .whatsappCore svg {
+    width: 21px;
+    height: 21px;
   }
 
   .socialCta ul {

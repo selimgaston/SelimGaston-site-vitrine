@@ -329,9 +329,24 @@ export default function Home() {
         href={profile.whatsappUrl}
         target="_blank"
         rel="noreferrer"
-        aria-label="Me contacter sur WhatsApp"
+        aria-label="Book me on WhatsApp"
       >
-        <WhatsAppIcon />
+        <svg className="whatsappRing" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <path id="waRing" d="M50,50 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0" />
+          </defs>
+          <circle cx="50" cy="50" r="49" />
+          <g className="whatsappRingText">
+            <text>
+              <textPath href="#waRing" textLength="251" lengthAdjust="spacing">
+                Book me on WhatsApp •
+              </textPath>
+            </text>
+          </g>
+        </svg>
+        <span className="whatsappCore">
+          <WhatsAppIcon />
+        </span>
       </a>
 
       <ScrollReveal />
