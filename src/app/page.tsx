@@ -201,7 +201,6 @@ export default function Home() {
             width="100%"
             height="152"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
           />
           <div className="releaseActions">
             <a href={profile.latestBeatportUrl} target="_blank" rel="noreferrer">
@@ -266,7 +265,6 @@ export default function Home() {
               width="100%"
               height="352"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
             />
           </article>
 
@@ -283,7 +281,6 @@ export default function Home() {
               width="100%"
               height="352"
               allow="autoplay"
-              loading="lazy"
             />
           </article>
         </div>
