@@ -196,6 +196,11 @@ iframe {
 }
 
 .marquee {
+  position: relative;
+  /* Au-dessus de la bulle WhatsApp (z-index 25) : quand le ticker défile
+     jusqu'à croiser son emplacement fixe, le bandeau passe devant plutôt
+     que d'être recouvert. */
+  z-index: 26;
   display: flex;
   overflow: hidden;
   border-block: 1px solid var(--black);
@@ -1124,6 +1129,8 @@ h2 {
 }
 
 .gigsContent {
+  position: relative;
+  z-index: 26;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1238,6 +1245,10 @@ iframe {
 }
 
 .socialCta {
+  position: relative;
+  /* Au-dessus de la bulle WhatsApp fixe (z-index 25) : la dernière tuile
+     d'icône (bas-droite) reste cliquable au lieu d'être recouverte. */
+  z-index: 26;
   display: grid;
   grid-template-columns: 34vw 1fr;
   min-height: 420px;
@@ -1383,6 +1394,9 @@ iframe {
   justify-content: flex-end;
   gap: 6px 14px;
   padding: 6px clamp(20px, 5vw, 56px);
+  /* Marge droite en plus : la bulle WhatsApp fixe flotte au même endroit
+     quand on arrive en bas de page, ce padding l'empêche de toucher le texte. */
+  padding-right: calc(clamp(20px, 5vw, 56px) + 74px);
   border-top: 1px solid var(--line);
   background: var(--black);
   text-align: right;
@@ -1404,6 +1418,62 @@ iframe {
 
 .footer a:hover {
   color: var(--white);
+}
+
+/* Bulle WhatsApp : élément flottant isolé, ne touche à aucune autre mise en page. */
+.whatsappFab {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: max(clamp(16px, 3vw, 32px), calc(env(safe-area-inset-bottom) + 12px));
+  z-index: 25;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  transition: transform 280ms var(--ease-out-expo), box-shadow 280ms var(--ease-out-expo);
+}
+
+.whatsappFab svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+@media (hover: hover) {
+  .whatsappFab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34);
+  }
+}
+
+.whatsappFab:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.whatsappFab:active {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .whatsappFab {
+    animation: whatsapp-in 640ms var(--ease-out-expo) 1200ms both;
+  }
+
+  @keyframes whatsapp-in {
+    from {
+      opacity: 0;
+      transform: scale(0.4) translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
 @media (min-width: 921px) {
@@ -1483,6 +1553,10 @@ iframe {
 
   .latestVisual,
   .gigsImage {
+    /* Largeur figée à 100% : sans ça, dès que max-height (plus bas, cas
+       paysage) devient la contrainte active, aspect-ratio dérive une largeur
+       depuis la hauteur et la photo rétrécit au lieu de remplir la colonne. */
+    width: 100%;
     min-height: 0;
     aspect-ratio: 4 / 3;
     background-repeat: no-repeat;
@@ -1572,6 +1646,17 @@ iframe {
 
   .marqueeItem {
     padding: 0.36em 0 0.3em;
+  }
+
+  .whatsappFab {
+    width: 50px;
+    height: 50px;
+    right: 14px;
+  }
+
+  .whatsappFab svg {
+    width: 26px;
+    height: 26px;
   }
 
   .socialCta ul {

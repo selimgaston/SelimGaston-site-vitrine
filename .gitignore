@@ -4,3 +4,13 @@ out
 .env*.local
 *.log
 .DS_Store
+tsconfig.tsbuildinfo
+
+# Fichiers auto-générés par `next dev` (scaffolding pour agents IA), pas du contenu du site.
+AGENTS.md
+CLAUDE.md
+
+# Config/outillage d'agent local (skills), pas du contenu du site.
+.agents/
+.claude/
+skills-lock.json

@@ -10,6 +10,7 @@ export const profile = {
   youtubeUrl: "https://www.youtube.com/@selimgaston",
   beatportUrl: "https://www.beatport.com/fr/artist/selim-gaston/150444",
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
+  whatsappUrl: "https://wa.me/33767743365",
   heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
   heroImage: "/selim-gaston-hero.jpeg",
   latestImage: "/selim-gaston-latest.jpeg",
@@ -21,8 +22,8 @@ export const profile = {
   latestBeatportUrl: "https://www.beatport.com/fr/track/aint-movin/30105815",
   gigsImage: "/selim-gaston-gigs.jpeg",
   gigs: [
-    { date: "12 September", venue: "TBA", city: "Paris", country: "France", past: false },
-    { date: "11 September", venue: "TBA", city: "Paris", country: "France", past: false },
+    { date: "15 October", venue: "Manko", city: "Paris", country: "France", past: false },
+    { date: "12 September", venue: "Chalet Des Iles", city: "Paris", country: "France", past: true },
     { date: "10 August", venue: "Cassette × Follamour", city: "Gammarth", country: "Tunisie", past: true },
     { date: "9 August", venue: "Sindbad", city: "Hammamet", country: "Tunisie", past: true },
     { date: "8 August", venue: "MOLO", city: "Gammarth", country: "Tunisie", past: true },
