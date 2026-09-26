@@ -1433,16 +1433,28 @@ iframe {
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.28));
 }
 
+/* Par défaut (hero, sections noires) : anneau blanc, texte noir. */
 .whatsappRing circle {
-  fill: var(--paper);
+  fill: #ffffff;
+  transition: fill 220ms ease;
 }
 
 .whatsappRing text {
-  fill: var(--ink);
+  fill: #111111;
   font-family: var(--font-display), Impact, sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.02em;
+  font-size: 11px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  transition: fill 220ms ease;
+}
+
+/* Au-dessus d'une section claire (bio, gigs, grille Links) : on inverse. */
+.whatsappFab.onLight .whatsappRing circle {
+  fill: #111111;
+}
+
+.whatsappFab.onLight .whatsappRing text {
+  fill: #ffffff;
 }
 
 .whatsappRingText {
@@ -1685,7 +1697,7 @@ iframe {
   }
 
   .whatsappRing text {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .whatsappCore {

@@ -3,6 +3,7 @@ import { profile } from "@/data/profile";
 import { MenuNav } from "./MenuNav";
 import { TopLink } from "./TopLink";
 import { ScrollReveal } from "./ScrollReveal";
+import { WhatsAppTheme } from "./WhatsAppTheme";
 
 function getSpotifyEmbedUrl(url: string) {
   const cleanUrl = url.split("?")[0].replace("/intl-fr/", "/");
@@ -148,7 +149,7 @@ export default function Home() {
         ))}
       </a>
 
-      <section className="statement" id="bio">
+      <section className="statement" id="bio" data-fab-theme="light">
         <div>
           <p className="eyebrow">Bio</p>
           <div className="bioLogo">
@@ -213,7 +214,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="gigsSection" id="gigs">
+      <section className="gigsSection" id="gigs" data-fab-theme="light">
         <div className="gigsImage" style={{ backgroundImage: `url(${profile.gigsImage})` }} />
         <div className="gigsContent">
           <p className="eyebrow">Gigs</p>
@@ -299,7 +300,7 @@ export default function Home() {
             </span>
           </h2>
         </div>
-        <ul>
+        <ul data-fab-theme="light">
           {platforms.map((platform) => (
             <li
               key={platform.name}
@@ -333,13 +334,13 @@ export default function Home() {
       >
         <svg className="whatsappRing" viewBox="0 0 100 100" aria-hidden="true">
           <defs>
-            <path id="waRing" d="M50,50 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0" />
+            <path id="waRing" d="M50,50 m-36.5,0 a36.5,36.5 0 1,1 73,0 a36.5,36.5 0 1,1 -73,0" />
           </defs>
           <circle cx="50" cy="50" r="49" />
           <g className="whatsappRingText">
             <text>
-              <textPath href="#waRing" textLength="251" lengthAdjust="spacing">
-                Book me on WhatsApp •
+              <textPath href="#waRing" textLength="229" lengthAdjust="spacing">
+                Book me on WhatsApp • Book me on WhatsApp •
               </textPath>
             </text>
           </g>
@@ -350,6 +351,7 @@ export default function Home() {
       </a>
 
       <ScrollReveal />
+      <WhatsAppTheme />
     </main>
   );
 }
