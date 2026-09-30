@@ -5,6 +5,7 @@ import { TopLink } from "./TopLink";
 import { ScrollReveal } from "./ScrollReveal";
 import { WhatsAppTheme } from "./WhatsAppTheme";
 import { Newsletter } from "./Newsletter";
+import { NewsletterPopup } from "./NewsletterPopup";
 
 function getSpotifyEmbedUrl(url: string) {
   const cleanUrl = url.split("?")[0].replace("/intl-fr/", "/");
@@ -351,6 +352,7 @@ export default function Home() {
 
       <ScrollReveal />
       <WhatsAppTheme />
+      <NewsletterPopup />
     </main>
   );
 }

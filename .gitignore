@@ -6,6 +6,13 @@ out
 .DS_Store
 tsconfig.tsbuildinfo
 
+# Secrets locaux pour `wrangler pages dev` (clé API Brevo, etc.) — jamais commités.
+.dev.vars
+.dev.vars.*
+
+# Cache local de `wrangler pages dev`.
+.wrangler/
+
 # Fichiers auto-générés par `next dev` (scaffolding pour agents IA), pas du contenu du site.
 AGENTS.md
 CLAUDE.md

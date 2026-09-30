@@ -1475,6 +1475,161 @@ iframe {
   display: none;
 }
 
+/* Pop-in d'inscription newsletter : une seule fois par navigateur (localStorage),
+   quelques secondes après l'arrivée sur le site. Réutilise /api/subscribe. */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(3, 3, 3, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .popupOverlay {
+    animation: popup-fade-in 320ms var(--ease-out-expo) both;
+  }
+
+  .popupCard {
+    animation: popup-card-in 360ms var(--ease-out-expo) both;
+  }
+}
+
+@keyframes popup-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes popup-card-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+    scale: 0.98;
+  }
+}
+
+.popupCard {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  background: var(--black);
+  border: 1px solid var(--line);
+}
+
+.popupClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+}
+
+.popupClose:hover,
+.popupClose:focus-visible {
+  color: var(--white);
+  outline: none;
+}
+
+.popupClose svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.popupCard .eyebrow {
+  color: var(--orange);
+}
+
+.popupCard h2 {
+  font-size: clamp(1.7rem, 4vw, 2.1rem);
+  color: var(--white);
+}
+
+.popupCopy {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.popupForm {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.popupForm input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.popupForm input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.popupForm input:focus-visible {
+  outline: none;
+  border-color: var(--orange);
+}
+
+.popupForm button {
+  flex: none;
+  padding: 12px 18px;
+  border: none;
+  background: var(--orange);
+  color: var(--black);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.popupForm button:hover:not(:disabled),
+.popupForm button:focus-visible:not(:disabled) {
+  background: var(--white);
+  outline: none;
+}
+
+.popupForm button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.popupError {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8rem;
+}
+
+.popupSuccess {
+  color: var(--white);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
 /* Bulle WhatsApp : élément flottant isolé, ne touche à aucune autre mise en page.
    Anneau de texte tournant (même principe que .spinBadge) autour d'un cœur vert cliquable. */
 .whatsappFab {
