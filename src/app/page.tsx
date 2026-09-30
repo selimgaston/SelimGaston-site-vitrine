@@ -16,6 +16,25 @@ function getSoundCloudEmbedUrl(url: string) {
   return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5a1f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
 }
 
+type Gig = (typeof profile.gigs)[number];
+
+function GigItem({ gig }: { gig: Gig }) {
+  return (
+    <article className={gig.past ? "gigItem isPast" : "gigItem"}>
+      <span>
+        {gig.past ? null : <i className="liveDot" aria-hidden="true" />}
+        {gig.date}
+        {gig.past ? <b className="gigTag">Played</b> : null}
+      </span>
+      <strong>{gig.venue}</strong>
+      <em>
+        {gig.city}
+        <b className="gigCountry">{gig.country}</b>
+      </em>
+    </article>
+  );
+}
+
 function PlatformLogo({ name }: { name: string }) {
   if (name === "spotify") {
     return (
@@ -50,10 +69,10 @@ function PlatformLogo({ name }: { name: string }) {
     );
   }
 
-  if (name === "facebook") {
+  if (name === "instagram") {
     return (
-      <svg aria-hidden="true" viewBox="0 0 56 88">
-        <path d="M36.7 14.6H52V0H34.4C17.7 0 8.6 9.7 8.6 27.3v11.5H0v16.3h8.6V88h18.1V55.1h15.1l2.9-16.3h-18V29c0-9.1 2.5-14.4 10-14.4Z" />
+      <svg aria-hidden="true" viewBox="0 0 88 88">
+        <path d="M27.5 0h33C74.8 0 88 13.2 88 27.5v33C88 74.8 74.8 88 60.5 88h-33C13.2 88 0 74.8 0 60.5v-33C0 13.2 13.2 0 27.5 0Zm-.9 8C16.4 8 8 16.4 8 26.6v34.8C8 71.6 16.4 80 26.6 80h34.8C71.6 80 80 71.6 80 61.4V26.6C80 16.4 71.6 8 61.4 8H26.6ZM44 21.8c12.3 0 22.2 9.9 22.2 22.2S56.3 66.2 44 66.2 21.8 56.3 21.8 44 31.7 21.8 44 21.8Zm0 8C36.3 29.8 29.8 36.3 29.8 44S36.3 58.2 44 58.2 58.2 51.7 58.2 44 51.7 29.8 44 29.8Zm23-14.6a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4Z" />
       </svg>
     );
   }
@@ -80,11 +99,12 @@ function WhatsAppIcon() {
 export default function Home() {
   const platforms = [
     { name: "spotify", url: profile.spotifyUrl, bg: "#1DB954", fg: "#ffffff" },
+    { name: "instagram", url: profile.instagramUrl, bg: "#E1306C", fg: "#ffffff" },
     { name: "soundcloud", url: profile.soundcloudUrl, bg: "#FF5500", fg: "#ffffff" },
     { name: "youtube", url: profile.youtubeUrl, bg: "#FF0000", fg: "#ffffff" },
     { name: "beatport", url: profile.beatportUrl, bg: "#000000", fg: "#01FF95" },
-    { name: "facebook", url: profile.facebookUrl, bg: "#1877F2", fg: "#ffffff" },
-    { name: "booking", url: `mailto:${profile.email}`, bg: "#E7FF3B", fg: "#050505" }
+    // Ancien jaune (#E7FF3B) resté ici lors du passage du site à l'orange — corrigé.
+    { name: "booking", url: `mailto:${profile.email}`, bg: "#ff5a1f", fg: "#050505" }
   ];
 
   const bioParagraphs = profile.bio.split("\n\n").map((paragraph) => paragraph.split(" "));
@@ -222,21 +242,7 @@ export default function Home() {
           <h2>Upcoming dates.</h2>
           <div className="gigList">
             {profile.gigs.map((gig) => (
-              <article
-                className={gig.past ? "gigItem isPast" : "gigItem"}
-                key={`${gig.date}-${gig.venue}`}
-              >
-                <span>
-                  {gig.past ? null : <i className="liveDot" aria-hidden="true" />}
-                  {gig.date}
-                  {gig.past ? <b className="gigTag">Played</b> : null}
-                </span>
-                <strong>{gig.venue}</strong>
-                <em>
-                  {gig.city}
-                  <b className="gigCountry">{gig.country}</b>
-                </em>
-              </article>
+              <GigItem gig={gig} key={`${gig.date}-${gig.venue}`} />
             ))}
           </div>
         </div>

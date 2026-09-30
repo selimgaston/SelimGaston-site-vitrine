@@ -7,6 +7,7 @@ export const profile = {
     "Selim Gaston is a DJ and producer exploring electronic music through a deep and emotional approach. Rooted in Progressive House, he developed a style built on smooth transitions, subtle emotions, and storytelling.\n\nOver time, his sound evolved toward more organic and rhythmic influences. Today, he blends Afro House, Melodic House, and Indie Dance, creating immersive sets driven by groove, melody, and feeling.",
   spotifyUrl: "https://open.spotify.com/intl-fr/artist/5xp3yUJp63Y1qxniSCRCXc?si=2-qTa04jQb6mWZxr6cebCA",
   soundcloudUrl: "https://soundcloud.com/selim-gaston",
+  instagramUrl: "https://www.instagram.com/selim_gaston/",
   youtubeUrl: "https://www.youtube.com/@selimgaston",
   beatportUrl: "https://www.beatport.com/fr/artist/selim-gaston/150444",
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
@@ -24,11 +25,11 @@ export const profile = {
   gigs: [
     { date: "15 October", venue: "Manko", city: "Paris", country: "France", past: false },
     { date: "12 September", venue: "Chalet Des Iles", city: "Paris", country: "France", past: true },
-    { date: "10 August", venue: "Cassette × Follamour", city: "Gammarth", country: "Tunisie", past: true },
-    { date: "9 August", venue: "Sindbad", city: "Hammamet", country: "Tunisie", past: true },
-    { date: "8 August", venue: "MOLO", city: "Gammarth", country: "Tunisie", past: true },
-    { date: "29 July", venue: "La Bêtise × MOLO", city: "Gammarth", country: "Tunisie", past: true },
-    { date: "18 July", venue: "Cozy Bar", city: "Hammamet", country: "Tunisie", past: true }
+    { date: "10 August", venue: "Cassette × Follamour", city: "Gammarth", country: "Tunisia", past: true },
+    { date: "9 August", venue: "Sindbad", city: "Hammamet", country: "Tunisia", past: true },
+    { date: "8 August", venue: "MOLO", city: "Gammarth", country: "Tunisia", past: true },
+    { date: "29 July", venue: "La Bêtise × MOLO", city: "Gammarth", country: "Tunisia", past: true },
+    { date: "18 July", venue: "Cozy Bar", city: "Hammamet", country: "Tunisia", past: true }
   ],
   stats: [
     { value: "Deep", label: "emotional approach" },

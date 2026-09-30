@@ -75,6 +75,7 @@ const structuredData = {
   email: profile.email,
   sameAs: [
     profile.spotifyUrl,
+    profile.instagramUrl,
     profile.soundcloudUrl,
     profile.youtubeUrl,
     profile.beatportUrl,
