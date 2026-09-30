@@ -4,6 +4,7 @@ import { MenuNav } from "./MenuNav";
 import { TopLink } from "./TopLink";
 import { ScrollReveal } from "./ScrollReveal";
 import { WhatsAppTheme } from "./WhatsAppTheme";
+import { Newsletter } from "./Newsletter";
 
 function getSpotifyEmbedUrl(url: string) {
   const cleanUrl = url.split("?")[0].replace("/intl-fr/", "/");
@@ -318,6 +319,7 @@ export default function Home() {
       </section>
 
       <footer className="footer" id="contact">
+        <Newsletter />
         <span className="footerLabel">Contact</span>
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
       </footer>
