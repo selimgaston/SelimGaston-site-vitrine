@@ -46,6 +46,7 @@ export const metadata: Metadata = {
     siteName: `${profile.artistName} | DJ`,
     title: `${profile.artistName} | DJ`,
     description: profile.tagline,
+    locale: "en_US",
     images: [socialImageUrl]
   },
   twitter: {
@@ -81,17 +82,21 @@ const structuredData = {
   ]
 };
 
+// Échappe "<" pour empêcher toute évasion de la balise <script> si une valeur
+// de profil venait un jour à contenir "</script>" ou similaire.
+const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
 export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${bebasNeue.variable}`}>
+    <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: structuredDataJson }}
         />
         {children}
       </body>
