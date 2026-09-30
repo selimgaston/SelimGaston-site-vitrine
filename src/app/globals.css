@@ -6,7 +6,7 @@
   --muted: #9f9a92;
   --line: rgba(255, 255, 255, 0.22);
   --line-dark: rgba(0, 0, 0, 0.14);
-  --accent: #e7ff3b;
+  --accent: #ff5a1f;
   --orange: #ff5a1f;
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --parallax: 18vh;
@@ -232,11 +232,13 @@ iframe {
   margin: 0 0.75em;
   align-self: center;
   border-radius: 50%;
-  background: var(--orange);
+  /* Noir, pas --orange : le fond du bandeau est --accent (même teinte orange
+     depuis le passage du site à l'orange), la pastille s'y fondrait sinon. */
+  background: var(--black);
 }
 
 .marquee:focus-visible {
-  outline: 2px solid var(--orange);
+  outline: 2px solid var(--black);
   outline-offset: -4px;
 }
 

@@ -13,7 +13,7 @@ function getSpotifyEmbedUrl(url: string) {
 }
 
 function getSoundCloudEmbedUrl(url: string) {
-  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23e7ff3b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
+  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5a1f&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
 }
 
 function PlatformLogo({ name }: { name: string }) {
