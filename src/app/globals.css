@@ -2179,13 +2179,14 @@ iframe {
   color: var(--white);
 }
 
-.guestlistHome {
+.miniHome {
   position: fixed;
   top: 24px;
   left: 24px;
+  z-index: 1;
 }
 
-.guestlistHome img {
+.miniHome img {
   width: 34px;
   height: 34px;
 }
@@ -2315,4 +2316,146 @@ iframe {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* Page /release : lien partagé à chaque nouvelle sortie (bio Instagram,
+   story…), même thème que le reste du site, mise en page dédiée (pochette +
+   liste de plateformes), indépendante des sections de la page d'accueil. */
+.releasePage {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
+}
+
+/* Pochette de la release en fond d'écran ambiant, floutée et assombrie —
+   --release-bg est posée en style inline depuis page.tsx (url de la cover). */
+.releasePage::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: 0;
+  background-image: var(--release-bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) brightness(0.35) saturate(1.2);
+  transform: scale(1.1);
+}
+
+.releasePage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, var(--black) 85%);
+}
+
+.releaseCard {
+  position: relative;
+  z-index: 1;
+}
+
+.releaseCard {
+  width: 100%;
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: minmax(200px, 320px) minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+}
+
+.releaseCover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.releaseMeta {
+  margin-top: -4px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.releaseCopy {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.releaseLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.releaseLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  color: var(--white);
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+@media (hover: hover) {
+  .releaseLink:hover {
+    border-color: var(--platform-color, var(--orange));
+  }
+}
+
+.releaseLink:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.releaseLinkAction {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.releaseLinkPlatform {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.releaseLinkPlatform svg {
+  width: 20px;
+  height: 20px;
+  /* Pas de fill ici : chaque icône porte déjà sa couleur de marque en
+     attribut (voir PlatformIcon.tsx) — une règle CSS l'écraserait. */
+}
+
+@media (max-width: 640px) {
+  .releaseCard {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .releaseCover {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .releaseLink {
+    text-align: left;
+  }
 }

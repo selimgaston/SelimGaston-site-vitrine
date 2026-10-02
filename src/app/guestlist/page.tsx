@@ -20,7 +20,7 @@ export const metadata: Metadata = guestlistEvent.active
 export default function GuestlistPage() {
   return (
     <main className="guestlistPage">
-      <a className="guestlistHome" href="/">
+      <a className="miniHome" href="/">
         <img src="/logo-sg.svg" alt="Selim Gaston" />
       </a>
 
