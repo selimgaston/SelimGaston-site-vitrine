@@ -11,15 +11,53 @@ interface Env {
 const BREVO_LIST_ID = 3;
 const BREVO_TEMPLATE_ID = 1;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_MAX_LENGTH = 254; // limite RFC 5321 de l'adresse elle-même
 
 function json(data: unknown, status: number) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json", "X-Content-Type-Options": "nosniff" }
   });
 }
 
+// Un <form>/fetch cross-site classique ne peut pas forger ces en-têtes :
+// seul un navigateur qui navigue réellement depuis le site les pose. Ça ne
+// remplace pas une vraie protection CSRF à base de jeton, mais ça bloque à
+// coût nul l'abus le plus courant (une page tierce qui POST en masse sur cet
+// endpoint pour spammer des inscriptions / faire envoyer des emails à des
+// adresses arbitraires via notre domaine). Comparé au host de la requête
+// elle-même (pas à un domaine en dur) pour marcher aussi bien en prod, sur
+// les previews Cloudflare Pages que via `wrangler pages dev` en local.
+function isSameSite(request: Request) {
+  const host = new URL(request.url).host;
+  const origin = request.headers.get("Origin");
+  if (origin) {
+    try {
+      return new URL(origin).host === host;
+    } catch {
+      return false;
+    }
+  }
+  const referer = request.headers.get("Referer");
+  if (referer) {
+    try {
+      return new URL(referer).host === host;
+    } catch {
+      return false;
+    }
+  }
+  // Ni Origin ni Referer : requête hors-navigateur (curl, script) — pas une
+  // navigation croisée depuis un site tiers, donc hors du scénario qu'on
+  // cherche à bloquer ici. Laissée passer (le rate limiting Cloudflare, lui,
+  // s'applique à tous les cas).
+  return true;
+}
+
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  if (!isSameSite(request)) {
+    return json({ error: "forbidden_origin" }, 403);
+  }
+
   if (!env.BREVO_API_KEY) {
     return json({ error: "not_configured" }, 500);
   }
@@ -32,7 +70,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return json({ error: "invalid_body" }, 400);
   }
 
-  if (!email || !EMAIL_PATTERN.test(email)) {
+  if (!email || email.length > EMAIL_MAX_LENGTH || !EMAIL_PATTERN.test(email)) {
     return json({ error: "invalid_email" }, 400);
   }
 
