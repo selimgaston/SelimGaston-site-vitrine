@@ -19,6 +19,7 @@ export default function GuestlistPage() {
       </a>
 
       <div className="guestlistCard">
+        <img className="guestlistLogo" src="/logo-sg.svg" alt="Selim Gaston" />
         <p className="eyebrow">Guestlist</p>
         <h1>{guestlistEvent.venue}</h1>
         <p className="guestlistMeta">
