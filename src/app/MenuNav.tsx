@@ -102,7 +102,7 @@ export function MenuNav() {
         >
           <p>Navigation</p>
           <a href="#top" onClick={(event) => goToSection(event, "#top")}>
-            Accueil
+            Home
           </a>
           <a href="#bio" onClick={(event) => goToSection(event, "#bio")}>
             Bio

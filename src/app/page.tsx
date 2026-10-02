@@ -116,7 +116,7 @@ export default function Home() {
       <span id="top" aria-hidden="true" />
       <div className="scrollProgress" aria-hidden="true" />
 
-      <nav className="nav" aria-label="Navigation principale">
+      <nav className="nav" aria-label="Main navigation">
         <TopLink />
         <MenuNav />
       </nav>
@@ -158,7 +158,7 @@ export default function Home() {
         </div>
       </section>
 
-      <a className="marquee" href="#gigs" aria-label="Voir les dates">
+      <a className="marquee" href="#gigs" aria-label="View dates">
         {[0, 1].map((copy) => (
           <div className="marqueeTrack" key={copy} aria-hidden="true">
             {profile.gigs.map((gig) => (
