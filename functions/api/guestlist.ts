@@ -125,6 +125,34 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   };
 
   const eventLabel = `${venue} — ${date} — ${city}`;
+  const normalizedName = name.toLowerCase().replace(/\s+/g, " ");
+
+  // 0. Vérifie si ce nom est déjà inscrit pour CET événement (comparaison sur
+  // l'attribut EVENT, pas sur toute la liste — un même nom doit pouvoir
+  // s'inscrire à nouveau pour une future soirée). On ne pagine pas : au-delà
+  // de 500 inscrits pour un même événement, les suivants ne sont plus
+  // vérifiés, ce qui dépasse largement la capacité visée par cette page.
+  const existingRes = await fetch(
+    `https://api.brevo.com/v3/contacts/lists/${BREVO_LIST_ID}/contacts?limit=500`,
+    { headers: brevoHeaders }
+  );
+
+  if (existingRes.ok) {
+    const existing = (await existingRes.json().catch(() => null)) as {
+      contacts?: { attributes?: { FULL_NAME?: string; EVENT?: string } }[];
+    } | null;
+
+    const alreadyOnList = existing?.contacts?.some((contact) => {
+      const contactName = contact.attributes?.FULL_NAME?.toLowerCase().replace(/\s+/g, " ");
+      return contactName === normalizedName && contact.attributes?.EVENT === eventLabel;
+    });
+
+    if (alreadyOnList) {
+      return json({ error: "duplicate_name" }, 409);
+    }
+  }
+  // Si la lecture échoue, on ne bloque pas l'inscription pour autant — mieux
+  // vaut un doublon rare qu'empêcher quelqu'un de s'inscrire.
 
   // 1. Ajoute (ou met à jour) le contact dans la liste guestlist, avec le
   // nom/téléphone/événement en attributs pour pouvoir générer la liste des

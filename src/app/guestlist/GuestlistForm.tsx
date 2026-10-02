@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { guestlistEvent } from "@/data/guestlist";
 
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "idle" | "loading" | "success" | "duplicate" | "error";
 
 export function GuestlistForm() {
   const [name, setName] = useState("");
@@ -21,6 +21,11 @@ export function GuestlistForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, ...guestlistEvent })
       });
+
+      if (res.status === 409) {
+        setStatus("duplicate");
+        return;
+      }
       if (!res.ok) throw new Error("guestlist request failed");
       setStatus("success");
     } catch {
@@ -34,6 +39,16 @@ export function GuestlistForm() {
         <p className="eyebrow">You&rsquo;re in</p>
         <h2>See you at {guestlistEvent.venue}.</h2>
         <p>A confirmation just landed in your inbox — just give your name at the door.</p>
+      </div>
+    );
+  }
+
+  if (status === "duplicate") {
+    return (
+      <div className="guestlistSuccess">
+        <p className="eyebrow">Already on the list</p>
+        <h2>You&rsquo;re all set.</h2>
+        <p>That name is already on the guestlist for {guestlistEvent.venue} — no need to sign up twice.</p>
       </div>
     );
   }
