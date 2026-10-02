@@ -327,8 +327,10 @@ export default function Home() {
 
       <footer className="footer" id="contact">
         <Newsletter />
-        <span className="footerLabel">Contact</span>
-        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        <div className="footerContact">
+          <span className="footerLabel">Contact</span>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </div>
       </footer>
 
       <a

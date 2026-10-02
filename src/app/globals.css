@@ -768,9 +768,26 @@ h3 {
   transition: transform 220ms ease, fill 140ms ease;
 }
 
-.menuShell:hover .menuLogo,
+/* Rotation au survol réservée aux appareils avec une vraie souris : sur
+   tactile, :hover resterait "collé" après un tap et le logo ne reviendrait
+   jamais à sa position d'origine à la fermeture. */
+@media (hover: hover) {
+  .menuShell:hover .menuLogo {
+    transform: rotate(90deg);
+  }
+}
+
 .menuShell[open] .menuLogo {
   transform: rotate(90deg);
+}
+
+/* Orange tant que le menu est ouvert, quel que soit l'appareil (piloté par
+   l'attribut [open], pas par :hover — fiable au tap, redevient noir dès la
+   fermeture, sans rester "collé" comme pouvait le faire :hover au tactile). */
+.menuShell[open] .menuButton {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--black);
 }
 
 .menuPanel {
@@ -1022,11 +1039,15 @@ h2 {
   color: var(--black);
 }
 
-.menuButton:hover,
-.homeMark:hover {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: var(--black);
+/* hover: hover évite que le tactile ne "colle" ce style orange après un tap
+   (sans souris pour en sortir, :hover resterait actif une fois le menu fermé). */
+@media (hover: hover) {
+  .menuButton:hover,
+  .homeMark:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--black);
+  }
 }
 
 .statement {
@@ -1399,6 +1420,12 @@ iframe {
   font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.footerContact {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
 }
 
 .footer a {
@@ -1933,6 +1960,39 @@ iframe {
     height: 21px;
   }
 
+  /* Newsletter + Contact empilés et alignés à gauche : à cette largeur, les
+     mettre côte à côte (comme en desktop) les faisait déborder à gauche et
+     le mail finissait collé contre la bulle WhatsApp fixe à droite. */
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 18px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+    padding-left: 20px;
+    /* Dégagement pour la bulle WhatsApp fixe (78px + 12px de marge à cette
+       largeur, voir plus bas) : l'input de la newsletter est en flex:1 et
+       irait sinon jusque dessous. +20px pour garder une vraie marge visuelle. */
+    padding-right: 110px;
+    text-align: left;
+  }
+
+  .newsletterForm {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .newsletterForm input {
+    flex: 1;
+    width: auto;
+    max-width: none;
+  }
+
+  .footerContact {
+    flex-wrap: wrap;
+  }
+
   .socialCta ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2024,8 +2084,7 @@ iframe {
   .latestCopy,
   .gigsContent,
   .socialCover,
-  .socialCta a,
-  .footer {
+  .socialCta a {
     padding-left: 20px;
     padding-right: 20px;
   }
