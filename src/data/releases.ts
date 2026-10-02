@@ -40,8 +40,7 @@ export const releases: Release[] = [
       { name: "applemusic", action: "Listen", label: "Apple Music", url: "https://music.apple.com/au/album/aint-movin/6797947826?i=6797947827" },
       { name: "itunes", action: "Download", label: "iTunes", url: "https://music.apple.com/au/album/aint-movin/6797947826?i=6797947827" },
       { name: "traxsource", action: "Go to", label: "Traxsource", url: "https://www.traxsource.com/title/2852059/aint-movin-extended-mix" },
-      // Lien artiste (pas de lien direct vers le titre trouvé) — à remplacer si un lien plus précis existe.
-      { name: "amazonmusic", action: "Listen", label: "Amazon Music", url: "https://music.amazon.com/artists/B004K6RAXA" },
+      { name: "amazonmusic", action: "Listen", label: "Amazon Music", url: "https://music.amazon.com/tracks/B0HCWM3RGJ" },
       { name: "tidal", action: "Listen", label: "Tidal", url: "https://tidal.com/album/549177029/track/549177030" },
       { name: "deezer", action: "Listen", label: "Deezer", url: "https://www.deezer.com/track/4201983812" },
       { name: "audiomack", action: "Listen", label: "Audiomack", url: "https://audiomack.com/selim-gaston/song/aint-movin" },
