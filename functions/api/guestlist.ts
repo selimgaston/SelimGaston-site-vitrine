@@ -15,6 +15,12 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[0-9+()\-\s]{6,20}$/;
 const NAME_MAX_LENGTH = 100;
 
+// Doit rester synchronisé avec `guestlistEvent.active` dans
+// src/data/guestlist.ts : la page cache le formulaire côté client quand
+// c'est à `false`, et ce drapeau refuse aussi les requêtes faites
+// directement à l'API pendant que c'est désactivé.
+const GUESTLIST_ACTIVE = false;
+
 function json(data: unknown, status: number) {
   return new Response(JSON.stringify(data), {
     status,
@@ -23,6 +29,10 @@ function json(data: unknown, status: number) {
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  if (!GUESTLIST_ACTIVE) {
+    return json({ error: "not_open" }, 403);
+  }
+
   if (!env.BREVO_API_KEY) {
     return json({ error: "not_configured" }, 500);
   }
