@@ -2164,3 +2164,149 @@ iframe {
     border-bottom: 0;
   }
 }
+
+/* Page /guestlist : lien unique partagé avant chaque soirée (Instagram bio,
+   story…), même thème que le reste du site mais mise en page dédiée (carte
+   centrée, formulaire), indépendante des sections de la page d'accueil. */
+.guestlistPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  background: var(--black);
+  color: var(--white);
+}
+
+.guestlistHome {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+}
+
+.guestlistHome img {
+  width: 34px;
+  height: 34px;
+}
+
+.guestlistCard {
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 32px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.guestlistCard h1 {
+  max-width: none;
+  margin-bottom: 10px;
+  font-size: clamp(2.6rem, 9vw, 4.4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.guestlistMeta {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guestlistCopy {
+  margin-top: 22px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.guestlistForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.guestlistForm label {
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.guestlistForm input {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.guestlistForm input::placeholder {
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.guestlistForm input:focus-visible {
+  outline: none;
+  border-color: var(--orange);
+}
+
+.guestlistForm input:disabled {
+  opacity: 0.5;
+}
+
+.guestlistForm button {
+  margin-top: 8px;
+  padding: 14px 18px;
+  border: none;
+  background: var(--orange);
+  color: var(--black);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .guestlistForm button:hover:not(:disabled) {
+    background: var(--white);
+  }
+}
+
+.guestlistForm button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.guestlistForm button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.guestlistError {
+  margin-top: 4px;
+  color: var(--orange);
+  font-size: 0.85rem;
+}
+
+.guestlistSuccess h2 {
+  margin: 14px 0 0;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.guestlistSuccess p:not(.eyebrow) {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
