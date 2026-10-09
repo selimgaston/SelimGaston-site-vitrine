@@ -4,7 +4,7 @@ import "./globals.css";
 import { profile } from "@/data/profile";
 
 const siteUrl = new URL("https://selimgaston.com");
-const socialImageUrl = new URL(profile.heroImage, siteUrl).toString();
+const socialImageUrl = new URL(profile.heroBackgroundImage, siteUrl).toString();
 
 const inter = Inter({
   subsets: ["latin"],

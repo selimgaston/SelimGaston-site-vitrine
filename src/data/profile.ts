@@ -13,7 +13,6 @@ export const profile = {
   facebookUrl: "https://www.facebook.com/selimgastonmusic",
   whatsappUrl: "https://wa.me/33767743365",
   heroBackgroundImage: "/selim-gaston-hero-background.jpeg",
-  heroImage: "/selim-gaston-hero.jpeg",
   latestImage: "/selim-gaston-latest.jpeg",
   latestTitle: "Ain't Movin",
   latestLabel: "Groove Society",
