@@ -1,5 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 import { profile } from "@/data/profile";
+import { guestlistEvent } from "@/data/guestlist";
 import { MenuNav } from "./MenuNav";
 import { TopLink } from "./TopLink";
 import { ScrollReveal } from "./ScrollReveal";
@@ -18,6 +19,17 @@ function getSoundCloudEmbedUrl(url: string) {
 
 type Gig = (typeof profile.gigs)[number];
 
+// Bouton vers /guestlist sur la date à venir qui correspond à l'événement de
+// src/data/guestlist.ts, seulement quand la guestlist est ouverte.
+function hasOpenGuestlist(gig: Gig) {
+  return (
+    guestlistEvent.active &&
+    !gig.past &&
+    gig.venue === guestlistEvent.venue &&
+    gig.date === guestlistEvent.date
+  );
+}
+
 function GigItem({ gig }: { gig: Gig }) {
   return (
     <article className={gig.past ? "gigItem isPast" : "gigItem"}>
@@ -27,6 +39,11 @@ function GigItem({ gig }: { gig: Gig }) {
         {gig.past ? <b className="gigTag">Played</b> : null}
       </span>
       <strong>{gig.venue}</strong>
+      {hasOpenGuestlist(gig) ? (
+        <a className="gigCta" href={`/guestlist/${guestlistEvent.slug}`}>
+          Request guestlist
+        </a>
+      ) : null}
       <em>
         {gig.city}
         <b className="gigCountry">{gig.country}</b>

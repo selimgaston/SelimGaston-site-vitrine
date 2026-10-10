@@ -16,12 +16,15 @@ const EMAIL_MAX_LENGTH = 254; // limite RFC 5321 de l'adresse elle-même
 const PHONE_PATTERN = /^[0-9+()\-\s]{6,20}$/;
 const NAME_MAX_LENGTH = 100;
 const CONTROL_CHARS = /[\x00-\x1f\x7f]/; // retours à la ligne, tabulations, etc.
+// Accompagnants en plus de l'inscrit (0 à +3) — doit rester synchronisé avec
+// PLUS_ONES_MAX dans src/app/guestlist/GuestlistForm.tsx.
+const PLUS_ONES_MAX = 3;
 
 // Doit rester synchronisé avec `guestlistEvent.active` dans
 // src/data/guestlist.ts : la page cache le formulaire côté client quand
 // c'est à `false`, et ce drapeau refuse aussi les requêtes faites
 // directement à l'API pendant que c'est désactivé.
-const GUESTLIST_ACTIVE = false;
+const GUESTLIST_ACTIVE = true;
 
 function json(data: unknown, status: number) {
   return new Response(JSON.stringify(data), {
@@ -82,6 +85,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   let venue: string | undefined;
   let date: string | undefined;
   let city: string | undefined;
+  let plusOnes: unknown;
 
   try {
     const body = (await request.json()) as {
@@ -91,6 +95,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       venue?: string;
       date?: string;
       city?: string;
+      plusOnes?: unknown;
     };
     name = body.name?.trim();
     email = body.email?.trim().toLowerCase();
@@ -98,6 +103,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     venue = body.venue?.trim();
     date = body.date?.trim();
     city = body.city?.trim();
+    plusOnes = body.plusOnes ?? 0;
   } catch {
     return json({ error: "invalid_body" }, 400);
   }
@@ -117,6 +123,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!venue || !date || !city || [venue, date, city].some((v) => CONTROL_CHARS.test(v))) {
     return json({ error: "invalid_event" }, 400);
   }
+
+  if (!Number.isInteger(plusOnes) || (plusOnes as number) < 0 || (plusOnes as number) > PLUS_ONES_MAX) {
+    return json({ error: "invalid_plus_ones" }, 400);
+  }
+  // "+2" — tel qu'à lire à la porte ; "+0" quand la personne vient seule.
+  const plusOnesLabel = `+${plusOnes}`;
 
   const brevoHeaders = {
     "api-key": env.BREVO_API_KEY,
@@ -166,7 +178,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       email,
       listIds: [BREVO_LIST_ID],
       updateEnabled: true,
-      attributes: { FULL_NAME: name, PHONE: phone, EVENT: eventLabel }
+      attributes: { FULL_NAME: name, PHONE: phone, EVENT: eventLabel, PLUS_ONES: plusOnesLabel }
     })
   });
 
@@ -185,7 +197,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     body: JSON.stringify({
       templateId: BREVO_TEMPLATE_ID,
       to: [{ email, name }],
-      params: { FULL_NAME: name, VENUE: venue, DATE: date, CITY: city }
+      params: { FULL_NAME: name, VENUE: venue, DATE: date, CITY: city, PLUS_ONES: plusOnesLabel }
     })
   });
 

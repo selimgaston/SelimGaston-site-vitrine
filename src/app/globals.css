@@ -1216,6 +1216,89 @@ h2 {
   color: #8f887e;
 }
 
+/* Bouton « Request guestlist » sur la date dont la guestlist est ouverte :
+   centré entre le lieu et la ville sur desktop, sous la ville sur mobile. */
+.gigItem:has(.gigCta) {
+  grid-template-columns: 160px auto minmax(0, 1fr) minmax(120px, auto);
+}
+
+.gigCta {
+  position: relative;
+  overflow: hidden;
+  justify-self: center;
+  min-height: 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: var(--black);
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+@media (hover: hover) {
+  .gigCta:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+}
+
+.gigCta:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Reflet qui balaie le bouton + halo qui pulse, pour attirer l'œil. */
+.gigCta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.75) 50%,
+    transparent 70%
+  );
+  translate: -120% 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gigCta {
+    animation: gigCtaGlow 2.4s ease-in-out infinite;
+  }
+
+  .gigCta::after {
+    animation: gigCtaShine 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes gigCtaShine {
+  0%,
+  45% {
+    translate: -120% 0;
+  }
+  100% {
+    translate: 120% 0;
+  }
+}
+
+@keyframes gigCtaGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 90, 31, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px 2px rgba(255, 90, 31, 0.55);
+  }
+}
+
 .musicPlayers {
   padding: 84px max(20px, calc((100vw - 1320px) / 2));
   background: var(--black);
@@ -1903,6 +1986,17 @@ iframe {
     padding: 24px 0;
   }
 
+  .gigItem:has(.gigCta) {
+    grid-template-columns: 1fr;
+  }
+
+  .gigCta {
+    order: 1;
+    justify-self: start;
+    min-height: 26px;
+    margin-top: 6px;
+  }
+
   /* Grille de liens : 3 colonnes, séparateurs tracés par le gap. */
   .socialCta ul {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2191,12 +2285,105 @@ iframe {
   height: 34px;
 }
 
+/* Variante /guestlist : logo entouré d'un cercle de texte qui tourne. */
+.miniHomeBadge {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  top: 14px;
+  left: 14px;
+}
+
+.miniHomeBadge > * {
+  grid-area: 1 / 1;
+}
+
+.miniHomeRing {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--white);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .miniHomeRing {
+    animation: miniHomeSpin 12s linear infinite;
+  }
+}
+
+@keyframes miniHomeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (hover: hover) {
+  .miniHomeBadge:hover .miniHomeRing {
+    fill: var(--orange);
+  }
+}
+
+.miniHomeBadge:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* Tablette : la carte est assez large pour passer sous le badge — on la
+   descend pour qu'ils ne se chevauchent pas (sous 560px le badge est masqué). */
+@media (max-width: 920px) {
+  .guestlistPage {
+    padding-top: 124px;
+  }
+}
+
 .guestlistCard {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   max-width: 440px;
   padding: 48px 32px;
   border: 1px solid var(--line);
   text-align: center;
+}
+
+/* Vidéo de la soirée en fond de la carte, assombrie pour garder le
+   formulaire lisible. */
+.guestlistVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.guestlistCard:has(.guestlistVideo)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.72) 45%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.guestlistCardContent {
+  position: relative;
+  z-index: 2;
+}
+
+.guestlistCard:has(.guestlistVideo) .guestlistForm input,
+.guestlistCard:has(.guestlistVideo) .guestlistForm select {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 560px) {
+  .guestlistCard {
+    padding: 40px 22px;
+  }
 }
 
 .guestlistLogo {
@@ -2211,6 +2398,33 @@ iframe {
   font-size: clamp(2.6rem, 9vw, 4.4rem);
   line-height: 0.95;
   text-transform: uppercase;
+}
+
+.guestlistAddress {
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+/* Lien vers Google Maps (ouvre l'app Maps sur mobile). */
+.guestlistAddress a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .guestlistAddress a:hover {
+    color: var(--orange);
+    text-decoration-color: var(--orange);
+  }
+}
+
+.guestlistAddress a:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
 }
 
 .guestlistMeta {
@@ -2245,7 +2459,8 @@ iframe {
   text-transform: uppercase;
 }
 
-.guestlistForm input {
+.guestlistForm input,
+.guestlistForm select {
   display: block;
   width: 100%;
   padding: 12px 14px;
@@ -2260,12 +2475,14 @@ iframe {
   color: rgba(255, 255, 255, 0.32);
 }
 
-.guestlistForm input:focus-visible {
+.guestlistForm input:focus-visible,
+.guestlistForm select:focus-visible {
   outline: none;
   border-color: var(--orange);
 }
 
-.guestlistForm input:disabled {
+.guestlistForm input:disabled,
+.guestlistForm select:disabled {
   opacity: 0.5;
 }
 
@@ -2298,6 +2515,24 @@ iframe {
   cursor: default;
 }
 
+/* Menu du nombre de personnes : flèche dessinée en CSS (le style natif
+   des <select> est retiré pour coller aux champs texte). */
+.guestlistForm select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--white) 50%),
+    linear-gradient(135deg, var(--white) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.guestlistForm select option {
+  background: var(--black);
+  color: var(--white);
+}
+
 .guestlistError {
   margin-top: 4px;
   color: var(--orange);
@@ -2316,6 +2551,157 @@ iframe {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* Après l'inscription : invitation à suivre le compte Instagram. */
+.guestlistFollow {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.guestlistSuccess .guestlistFollow p {
+  margin-top: 0;
+  font-size: 0.85rem;
+}
+
+.guestlistFollow a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  margin-top: 14px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: var(--black);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (hover: hover) {
+  .guestlistFollow a:hover {
+    background: var(--white);
+  }
+}
+
+.guestlistFollow a:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+/* Desktop / tablette : carte un peu plus compacte pour tenir dans la hauteur
+   d'un écran d'ordinateur courant sans défiler. */
+@media (min-width: 921px) {
+  .guestlistPage {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+@media (min-width: 561px) {
+  .guestlistCard {
+    padding: 36px 32px;
+  }
+
+  .guestlistForm {
+    gap: 12px;
+    margin-top: 24px;
+  }
+}
+
+/* Mobile : toute la page /guestlist tient sur un
+   seul écran, sans défilement — carte resserrée, champs plus compacts, logo
+   fixe en haut à gauche masqué (il chevaucherait la carte pleine largeur). */
+@media (max-width: 560px) {
+  .guestlistPage {
+    min-height: 100svh;
+    padding: 12px;
+  }
+
+  .guestlistPage .miniHome {
+    display: none;
+  }
+
+  .guestlistCard {
+    padding: 20px 18px;
+  }
+
+  .guestlistLogo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+
+  .guestlistCard .eyebrow {
+    margin-bottom: 6px;
+    font-size: 0.68rem;
+  }
+
+  .guestlistCard h1 {
+    margin-bottom: 6px;
+    font-size: 2.4rem;
+  }
+
+  .guestlistAddress {
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+  }
+
+  .guestlistMeta {
+    font-size: 0.75rem;
+  }
+
+  .guestlistCopy {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .guestlistForm {
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .guestlistForm label {
+    margin-bottom: -4px;
+    font-size: 0.65rem;
+  }
+
+  .guestlistForm input,
+  .guestlistForm select {
+    padding: 9px 12px;
+    font-size: 16px; /* 16px minimum : évite le zoom auto d'iOS au focus */
+  }
+
+  .guestlistForm button {
+    margin-top: 4px;
+    padding: 13px 18px;
+  }
+
+  .guestlistSuccess h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Petits téléphones (iPhone SE…) : on retire le texte d'intro et les
+   libellés passent en masqué visuellement (les placeholders et les valeurs
+   des menus suffisent à comprendre chaque champ). */
+@media (max-width: 560px) and (max-height: 620px) {
+  .guestlistCopy {
+    display: none;
+  }
+
+  .guestlistForm label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }
 
 /* Page /release : lien partagé à chaque nouvelle sortie (bio Instagram,
