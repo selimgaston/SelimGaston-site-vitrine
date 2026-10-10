@@ -58,6 +58,9 @@ export function GuestlistForm() {
         <p className="eyebrow">You&rsquo;re in</p>
         <h2>See you at {guestlistEvent.venue}.</h2>
         <p>A confirmation just landed in your inbox — just give your name at the door.</p>
+        <p className="guestlistSpamHint">
+          Can&rsquo;t find it? Check your spam folder or the Promotions tab.
+        </p>
         <InstagramFollow />
       </div>
     );

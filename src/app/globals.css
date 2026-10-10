@@ -2553,6 +2553,12 @@ iframe {
   line-height: 1.6;
 }
 
+.guestlistSuccess p.guestlistSpamHint {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
 /* Après l'inscription : invitation à suivre le compte Instagram. */
 .guestlistFollow {
   margin-top: 26px;
