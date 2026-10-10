@@ -16,6 +16,7 @@ const EMAIL_MAX_LENGTH = 254; // limite RFC 5321 de l'adresse elle-même
 const PHONE_PATTERN = /^[0-9+()\-\s]{6,20}$/;
 const NAME_MAX_LENGTH = 100;
 const CONTROL_CHARS = /[\x00-\x1f\x7f]/; // retours à la ligne, tabulations, etc.
+const ADDRESS_MAX_LENGTH = 150;
 // Accompagnants en plus de l'inscrit (0 à +3) — doit rester synchronisé avec
 // PLUS_ONES_MAX dans src/app/guestlist/GuestlistForm.tsx.
 const PLUS_ONES_MAX = 3;
@@ -85,6 +86,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   let venue: string | undefined;
   let date: string | undefined;
   let city: string | undefined;
+  let address: string | undefined;
   let plusOnes: unknown;
 
   try {
@@ -95,6 +97,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       venue?: string;
       date?: string;
       city?: string;
+      address?: string | null;
       plusOnes?: unknown;
     };
     name = body.name?.trim();
@@ -103,6 +106,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     venue = body.venue?.trim();
     date = body.date?.trim();
     city = body.city?.trim();
+    address = body.address?.trim() || undefined;
     plusOnes = body.plusOnes ?? 0;
   } catch {
     return json({ error: "invalid_body" }, 400);
@@ -123,6 +127,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!venue || !date || !city || [venue, date, city].some((v) => CONTROL_CHARS.test(v))) {
     return json({ error: "invalid_event" }, 400);
   }
+  // Adresse du lieu (facultative) : affichée dans l'email avec un lien Google
+  // Maps construit ici — jamais une URL reçue du navigateur.
+  if (address && (address.length > ADDRESS_MAX_LENGTH || CONTROL_CHARS.test(address))) {
+    return json({ error: "invalid_event" }, 400);
+  }
+  const mapsUrl = address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+    : "";
 
   if (!Number.isInteger(plusOnes) || (plusOnes as number) < 0 || (plusOnes as number) > PLUS_ONES_MAX) {
     return json({ error: "invalid_plus_ones" }, 400);
@@ -197,7 +209,15 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     body: JSON.stringify({
       templateId: BREVO_TEMPLATE_ID,
       to: [{ email, name }],
-      params: { FULL_NAME: name, VENUE: venue, DATE: date, CITY: city, PLUS_ONES: plusOnesLabel }
+      params: {
+        FULL_NAME: name,
+        VENUE: venue,
+        DATE: date,
+        CITY: city,
+        ADDRESS: address ?? "",
+        MAPS_URL: mapsUrl,
+        PLUS_ONES: plusOnesLabel
+      }
     })
   });
 

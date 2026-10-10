@@ -63,7 +63,9 @@ export default async function GuestlistEventPage({ params }: { params: Params })
         ) : null}
 
         <div className="guestlistCardContent">
-          <img className="guestlistLogo" src="/logo-sg.svg" alt="Selim Gaston" />
+          <a className="guestlistLogoLink" href="/" aria-label="Selim Gaston — home">
+            <img className="guestlistLogo" src="/logo-sg.svg" alt="Selim Gaston" />
+          </a>
 
           {guestlistEvent.active ? (
             <>

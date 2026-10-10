@@ -11,13 +11,16 @@ type Status = "idle" | "loading" | "success" | "duplicate" | "error";
 const PLUS_ONES_MAX = 3;
 const PLUS_ONES = Array.from({ length: PLUS_ONES_MAX + 1 }, (_, i) => i);
 
-// Proposé une fois l'inscription faite (ou déjà faite).
+// Proposé une fois l'inscription faite (ou déjà faite) : Instagram + le site.
 function InstagramFollow() {
   return (
     <div className="guestlistFollow">
       <p>Stay in the loop for the next dates.</p>
       <a href={profile.instagramUrl} target="_blank" rel="noopener noreferrer">
         Follow me on Instagram
+      </a>
+      <a className="guestlistFollowSecondary" href="/">
+        Visit my website
       </a>
     </div>
   );
@@ -139,6 +142,12 @@ export function GuestlistForm() {
         </button>
 
         {status === "error" && <p className="guestlistError">Something went wrong — try again.</p>}
+
+        <p className="guestlistConsent">
+          By signing up, I agree that my details will only be used to manage the guestlist for
+          this event and to let me know about Selim Gaston&rsquo;s upcoming events. They are never
+          sold or used for anything else.
+        </p>
       </form>
     </>
   );

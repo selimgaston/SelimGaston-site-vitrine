@@ -8,6 +8,12 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
 
+# Icônes des emails (Instagram, Spotify, SoundCloud) : chargées par les
+# clients mail depuis un autre domaine — on retire le CORP same-origin global.
+/email/*
+  ! Cross-Origin-Resource-Policy
+  Cross-Origin-Resource-Policy: cross-origin
+
 https://:project.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 

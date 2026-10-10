@@ -22,7 +22,9 @@ export default function GuestlistPage() {
 
       <div className="guestlistCard">
         <div className="guestlistCardContent">
-          <img className="guestlistLogo" src="/logo-sg.svg" alt="Selim Gaston" />
+          <a className="guestlistLogoLink" href="/" aria-label="Selim Gaston — home">
+            <img className="guestlistLogo" src="/logo-sg.svg" alt="Selim Gaston" />
+          </a>
           <p className="eyebrow">Guestlist</p>
           {guestlistEvent.active ? (
             <>

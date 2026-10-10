@@ -2392,6 +2392,19 @@ iframe {
   margin: 0 auto 24px;
 }
 
+/* Logo de la carte cliquable → page d'accueil (seul lien vers le site sur
+   mobile, où le badge en haut à gauche est masqué). */
+.guestlistLogoLink {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.guestlistLogoLink:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+}
+
 .guestlistCard h1 {
   max-width: none;
   margin-bottom: 10px;
@@ -2533,6 +2546,15 @@ iframe {
   color: var(--white);
 }
 
+/* Remarque sur l'usage des données, sous le bouton d'envoi. */
+.guestlistConsent {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.7rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
 .guestlistError {
   margin-top: 4px;
   color: var(--orange);
@@ -2587,9 +2609,22 @@ iframe {
   text-transform: uppercase;
 }
 
+.guestlistFollow a.guestlistFollowSecondary {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--white);
+}
+
 @media (hover: hover) {
   .guestlistFollow a:hover {
     background: var(--white);
+  }
+
+  .guestlistFollow a.guestlistFollowSecondary:hover {
+    border-color: var(--white);
+    background: var(--white);
+    color: var(--black);
   }
 }
 
@@ -2602,14 +2637,18 @@ iframe {
    d'un écran d'ordinateur courant sans défiler. */
 @media (min-width: 921px) {
   .guestlistPage {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 }
 
 @media (min-width: 561px) {
   .guestlistCard {
     padding: 36px 32px;
+  }
+
+  .guestlistLogo {
+    margin-bottom: 16px;
   }
 
   .guestlistForm {
@@ -2689,6 +2728,12 @@ iframe {
 
   .guestlistSuccess h2 {
     font-size: 2rem;
+  }
+
+  .guestlistConsent {
+    margin-top: 0;
+    font-size: 0.62rem;
+    line-height: 1.35;
   }
 }
 
