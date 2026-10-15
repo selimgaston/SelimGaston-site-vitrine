@@ -25,7 +25,7 @@ const PLUS_ONES_MAX = 3;
 // src/data/guestlist.ts : la page cache le formulaire côté client quand
 // c'est à `false`, et ce drapeau refuse aussi les requêtes faites
 // directement à l'API pendant que c'est désactivé.
-const GUESTLIST_ACTIVE = true;
+const GUESTLIST_ACTIVE = false;
 
 function json(data: unknown, status: number) {
   return new Response(JSON.stringify(data), {

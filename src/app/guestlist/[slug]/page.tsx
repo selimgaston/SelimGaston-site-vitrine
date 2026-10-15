@@ -92,7 +92,7 @@ export default async function GuestlistEventPage({ params }: { params: Params })
           ) : (
             <>
               <p className="eyebrow">Guestlist</p>
-              <h1>Not open yet.</h1>
+              <h1>Guestlist closed.</h1>
               <p className="guestlistCopy">Check back closer to the next event.</p>
             </>
           )}

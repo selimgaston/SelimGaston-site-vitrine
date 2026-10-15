@@ -8,7 +8,7 @@
 // avec celui-ci, pour refuser aussi les requêtes directes à l'API tant que
 // c'est désactivé.
 export const guestlistEvent = {
-  active: true,
+  active: false,
   // URL de la page : /guestlist/<slug> — lieu + date (JJ-MM-AAAA), unique pour
   // chaque soirée. /guestlist tout court redirige vers l'événement en cours.
   slug: "manko-15-10-2026",
